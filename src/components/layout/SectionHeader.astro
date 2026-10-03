@@ -1,0 +1,72 @@
+---
+/**
+ * Cabecera de sección reutilizable, con el estilo de las de la ficha (Figma "Section Header" en
+ * Tasting Notes, Origin y Related Products): eyebrow en acento + título + entradilla opcional.
+ *   Móvil: Overline/S + Heading/H2, separación 8 px. Desktop: Overline/M + Heading/H1, 12 px.
+ * `size="display"` es el titular editorial de la portada (Display/M → Display/L, como el nombre
+ * del café en la ficha). Slots: "aside" a la derecha en desktop (p. ej. "Ver todos") y el
+ * por defecto, debajo de la entradilla (botones).
+ */
+interface Props {
+  title: string;
+  eyebrow?: string | undefined;
+  lede?: string | undefined;
+  /** Nivel del encabezado: 1 en la cabecera de página, 2 en secciones. */
+  level?: 1 | 2 | 3;
+  size?: 'section' | 'display';
+  /** body = Body/L secundario (Origen); quote = Quote M/L (Notas de cata). */
+  ledeStyle?: 'body' | 'quote';
+  /** id del encabezado, para aria-labelledby de la sección. */
+  id?: string | undefined;
+  class?: string | undefined;
+}
+
+const { title, eyebrow, lede, level = 2, size = 'section', ledeStyle = 'body', id, class: className } = Astro.props;
+const Heading = `h${level}` as 'h1' | 'h2' | 'h3';
+const hasAside = Astro.slots.has('aside');
+// Se renderiza antes para no dejar un contenedor vacío si el slot solo trae espacios.
+const actions = Astro.slots.has('default') ? (await Astro.slots.render('default')).trim() : '';
+---
+
+<div class:list={['flex flex-col gap-6', className]}>
+  <div class:list={['flex flex-col gap-2', hasAside && 'lg:flex-row lg:items-end lg:justify-between lg:gap-8']}>
+    <hgroup class="flex flex-col gap-2 lg:gap-3">
+      {eyebrow && <p class="type-overline-s text-text-accent lg:type-overline-m">{eyebrow}</p>}
+      <Heading
+        id={id}
+        class:list={[
+          'text-balance text-text-primary',
+          size === 'display' ? 'type-display-m lg:type-display-l' : 'type-heading-h2 lg:type-heading-h1',
+        ]}
+      >
+        {title}
+      </Heading>
+    </hgroup>
+    {
+      hasAside && (
+        <div class="shrink-0">
+          <slot name="aside" />
+        </div>
+      )
+    }
+  </div>
+  {
+    lede && (
+      <p
+        class:list={[
+          'max-w-[41rem] text-pretty',
+          ledeStyle === 'quote' ? 'type-quote-m text-text-primary lg:type-quote-l' : 'type-body-l text-text-secondary',
+        ]}
+      >
+        {lede}
+      </p>
+    )
+  }
+  {
+    actions && (
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        <Fragment set:html={actions} />
+      </div>
+    )
+  }
+</div>

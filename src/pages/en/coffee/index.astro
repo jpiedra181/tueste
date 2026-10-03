@@ -1,0 +1,37 @@
+---
+/**
+ * Listado de cafés (no está en Figma): cabecera de sección + rejilla de Product Card.
+ * Rejilla: 1 columna en móvil, 2 desde sm, 3 desde lg y 4 desde xl (296 px a 1440, como en Figma).
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeader from '@/components/layout/SectionHeader.astro';
+import ProductCard from '@/components/product/ProductCard.astro';
+import { routePath, useTranslations, type Locale } from '@/i18n';
+import { buildCartCatalog, getProducts } from '@/lib/catalog';
+
+const locale: Locale = 'en';
+const t = useTranslations(locale);
+const products = await getProducts();
+const catalog = buildCartCatalog(products, locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('listing/title')}
+  description={t('listing/lede')}
+  alternatePath={routePath('es', { name: 'listing' })}
+  catalog={catalog}
+>
+  <div class="container-page flex flex-col gap-10 pt-12 pb-16 lg:gap-16 lg:pt-20 lg:pb-30">
+    <SectionHeader level={1} eyebrow={t('listing/eyebrow')} title={t('listing/title')} lede={t('listing/lede')} />
+    <ul role="list" class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-12 xl:grid-cols-4">
+      {
+        products.map((product, index) => (
+          <li>
+            <ProductCard product={product} locale={locale} headingLevel={2} loading={index === 0 ? 'eager' : 'lazy'} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>

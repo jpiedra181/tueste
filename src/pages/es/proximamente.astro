@@ -1,0 +1,54 @@
+---
+/**
+ * "Próximamente" (no está en Figma): destino de las secciones que aún no existen (suscripciones,
+ * tostadero, cuaderno, buscar, cuenta, enlaces del pie). Propone seguir con los cafés.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeader from '@/components/layout/SectionHeader.astro';
+import ProductCard from '@/components/product/ProductCard.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { buttonClasses } from '@/components/ui/button';
+import { routePath, useTranslations, type Locale } from '@/i18n';
+import { buildCartCatalog, getProducts } from '@/lib/catalog';
+
+const locale: Locale = 'es';
+const t = useTranslations(locale);
+const products = await getProducts();
+const catalog = buildCartCatalog(products, locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('soon/title')}
+  description={t('soon/body')}
+  alternatePath={routePath('en', { name: 'soon' })}
+  catalog={catalog}
+  noindex
+>
+  <section class="container-page pt-12 pb-16 lg:pt-20 lg:pb-24">
+    <SectionHeader level={1} title={t('soon/title')} lede={t('soon/body')}>
+      <a href={routePath(locale, { name: 'listing' })} class={buttonClasses({ variant: 'primary', size: 'lg' })}>
+        {t('related/view-all')}
+        <Icon name="arrow-right" size={20} />
+      </a>
+      <a href={routePath(locale, { name: 'home' })} class={buttonClasses({ variant: 'secondary', size: 'lg' })}>
+        {t('nav/home')}
+      </a>
+    </SectionHeader>
+  </section>
+
+  <section aria-labelledby="soon-grid-title" class="bg-bg-subtle py-16 lg:py-30">
+    <div class="container-page flex flex-col gap-8 lg:gap-10">
+      <SectionHeader id="soon-grid-title" eyebrow={t('listing/eyebrow')} title={t('home/grid-title')} />
+      <ul role="list" class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-12 xl:grid-cols-4">
+        {
+          products.map((product) => (
+            <li>
+              <ProductCard product={product} locale={locale} headingLevel={3} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

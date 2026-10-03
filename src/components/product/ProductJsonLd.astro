@@ -1,0 +1,64 @@
+---
+/**
+ * Datos estructurados schema.org/Product: una Offer por variante (precio, disponibilidad y URL con
+ * la variante en los parámetros), valoración agregada y las reseñas más recientes.
+ * Va en el <head> (slot "head" de BaseLayout).
+ */
+import { routePath, translate, type Locale } from '@/i18n';
+import type { Product, Review } from '@/lib/schemas';
+import { selectionToSearch } from '@/lib/variants';
+import { grindLabelKey, sizeLabelKey } from './pdp/labels';
+
+interface Props {
+  product: Product;
+  reviews: Review[];
+  locale: Locale;
+}
+
+const { product, reviews, locale } = Astro.props;
+const site = Astro.site ?? new URL('https://tueste.netlify.app');
+const pageUrl = new URL(routePath(locale, { name: 'product', slug: product.id }), site).href;
+const brand = translate(locale, 'common/brand');
+
+const data = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  '@id': `${pageUrl}#product`,
+  url: pageUrl,
+  name: product.name,
+  description: product.subtitle[locale],
+  sku: product.defaultSku,
+  brand: { '@type': 'Brand', name: brand },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: product.rating.average,
+    reviewCount: product.rating.count,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  offers: product.variants.map((variant) => ({
+    '@type': 'Offer',
+    sku: variant.sku,
+    name: `${product.name} · ${translate(locale, grindLabelKey[variant.grind])} · ${translate(locale, sizeLabelKey[variant.size])}`,
+    url: `${pageUrl}${selectionToSearch(locale, { grind: variant.grind, size: variant.size })}`,
+    price: (variant.price / 100).toFixed(2),
+    priceCurrency: 'EUR',
+    availability: variant.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+    itemCondition: 'https://schema.org/NewCondition',
+    seller: { '@type': 'Organization', name: brand },
+  })),
+  review: reviews.slice(0, 5).map((review) => ({
+    '@type': 'Review',
+    author: { '@type': 'Person', name: review.author },
+    datePublished: review.date,
+    name: review.title[locale],
+    reviewBody: review.body[locale],
+    reviewRating: { '@type': 'Rating', ratingValue: review.rating, bestRating: 5, worstRating: 1 },
+  })),
+};
+
+// "<" escapado: el JSON nunca puede cerrar la etiqueta <script>.
+const json = JSON.stringify(data).replace(/</g, '\\u003c');
+---
+
+<script is:inline type="application/ld+json" set:html={json} />

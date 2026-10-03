@@ -1,0 +1,52 @@
+---
+/**
+ * Migas de pan de la ficha (Figma "Breadcrumb" 25:63): Inicio / Cafés / Nombre.
+ * Solo en desktop: la ficha mobile (29:2) pasa directamente de la cabecera a la galería.
+ */
+import { routePath, useTranslations, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  /** Nombre del café (último paso, página actual). */
+  name: string;
+  slug: string;
+}
+
+const { locale, name, slug } = Astro.props;
+const t = useTranslations(locale);
+
+const crumbs = [
+  { label: t('nav/home'), href: routePath(locale, { name: 'home' }) },
+  { label: t('nav/coffee'), href: routePath(locale, { name: 'listing' }) },
+  { label: name, href: routePath(locale, { name: 'product', slug }) },
+];
+const last = crumbs.length - 1;
+---
+
+<nav aria-label={t('a11y/breadcrumb')} class="container-page hidden py-6 lg:block">
+  <ol class="flex flex-wrap items-center gap-2 type-body-xs">
+    {
+      crumbs.map((crumb, i) => (
+        <li class="flex items-center gap-2">
+          {i === last ? (
+            <a href={crumb.href} aria-current="page" class="-my-1 py-1 text-text-primary">
+              {crumb.label}
+            </a>
+          ) : (
+            <>
+              <a
+                href={crumb.href}
+                class="-my-1 py-1 text-text-tertiary underline-offset-2 transition-colors duration-[var(--duration-fast)] hover:text-text-primary hover:underline"
+              >
+                {crumb.label}
+              </a>
+              <span aria-hidden="true" class="text-text-tertiary">
+                /
+              </span>
+            </>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

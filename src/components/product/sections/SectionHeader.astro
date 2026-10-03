@@ -1,0 +1,22 @@
+---
+/**
+ * Cabecera de sección de la ficha (Figma "Section Header"): eyebrow Overline + título.
+ * Mobile: Overline/S + Heading/H2 · desktop: Overline/M + Heading/H1. El título es el h2 de la sección.
+ */
+interface Props {
+  eyebrow: string;
+  title: string;
+  /** id del h2 (lo usa aria-labelledby de la sección). */
+  id: string;
+  class?: string;
+}
+
+const { eyebrow, title, id, class: className } = Astro.props;
+---
+
+<div class:list={['flex flex-col gap-2 lg:gap-3', className]}>
+  <p class="type-overline-s text-text-accent lg:type-overline-m">{eyebrow}</p>
+  <h2 id={id} class="type-heading-h2 text-text-primary lg:type-heading-h1">
+    {title}
+  </h2>
+</div>

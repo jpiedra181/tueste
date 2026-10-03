@@ -1,0 +1,108 @@
+---
+/**
+ * Tarjeta de producto (Figma "Product Card" 22:1762, estados Default y Hover).
+ * Toda la tarjeta enlaza a la ficha sin anidar controles: el enlace va en el título y su ::after
+ * (z-1) cubre la tarjeta, imagen incluida; el botón de añadido rápido queda por encima (z-10).
+ * En el DOM el título va primero (lectores de pantalla y navegación por encabezados); `order`
+ * recupera el orden visual de Figma: imagen, origen, nombre, notas y precio.
+ * Hover / foco: sombra Elevation/1 en la imagen, nombre en acento y aparece el botón +.
+ * En pantallas táctiles (sin hover) el botón + está siempre visible.
+ * Se usa en el listado, la portada, "próximamente" y "También te gustará".
+ */
+import Packshot from '@/components/art/Packshot';
+import { badgeClasses } from '@/components/ui/badge';
+import { formatPrice, routePath, useTranslations, type Locale } from '@/i18n';
+import { maxQtyFor } from '@/lib/pricing';
+import type { BadgeKind, Grind, Product, Size } from '@/lib/schemas';
+import { findVariant, isAvailable, resolveSelection } from '@/lib/variants';
+import QuickAddButton from './QuickAddButton';
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  /** Nivel del título de la tarjeta (h2 en el listado, h3 dentro de una sección). */
+  headingLevel?: 2 | 3;
+  loading?: 'eager' | 'lazy';
+  class?: string;
+}
+
+const { product, locale, headingLevel = 3, loading = 'lazy', class: className } = Astro.props;
+const t = useTranslations(locale);
+
+const badgeKeys = { new: 'badge/new', limited: 'badge/limited', bestseller: 'badge/bestseller' } as const satisfies Record<BadgeKind, string>;
+const grindKeys = { beans: 'pdp/grind-beans', espresso: 'pdp/grind-espresso', filter: 'pdp/grind-filter' } as const satisfies Record<Grind, string>;
+const sizeKeys = { '250g': 'pdp/size-250g', '1kg': 'pdp/size-1kg' } as const satisfies Record<Size, string>;
+
+const href = routePath(locale, { name: 'product', slug: product.id });
+const origin = product.card.origin[locale];
+const notes = product.card.notes[locale];
+
+// Precio "desde": la variante por defecto (250 g).
+const priceVariant = product.variants.find((v) => v.sku === product.defaultSku) ?? product.variants[0]!;
+
+// Añadido rápido: la variante por defecto o, si está agotada, la primera disponible.
+const quickVariant = findVariant(product, resolveSelection(product, {}).selection);
+const soldOut = !product.variants.some((v) => v.stock > 0);
+const quickAdd =
+  quickVariant && isAvailable(quickVariant)
+    ? {
+        sku: quickVariant.sku,
+        max: maxQtyFor(quickVariant.stock),
+        label: t('layout/quick-add', {
+          name: product.name,
+          variant: `${t(grindKeys[quickVariant.grind])} · ${t(sizeKeys[quickVariant.size])}`,
+        }),
+      }
+    : undefined;
+
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+---
+
+<article class:list={['group/card relative isolate flex flex-col gap-4', className]}>
+  <div class="order-2 flex flex-col gap-1">
+    <Heading
+      class="order-2 type-heading-h3 text-text-primary transition-colors duration-[var(--duration-base)] ease-[var(--ease-out)] group-hover/card:text-text-accent group-focus-within/card:text-text-accent"
+    >
+      <a href={href} data-astro-prefetch class="rounded-xs after:absolute after:inset-0 after:z-1">{product.name}</a>
+    </Heading>
+    <p class="order-1 type-overline-s text-text-tertiary">{origin}</p>
+    <p class="order-3 type-body-s text-text-secondary">{notes}</p>
+    <p class="order-4 flex items-center gap-2 pt-1 whitespace-nowrap">
+      <span class="type-price-m text-text-primary">{formatPrice(priceVariant.price, locale)}</span>
+      <span class="type-mono-s text-text-tertiary">· {t(sizeKeys[priceVariant.size])}</span>
+    </p>
+  </div>
+
+  <div
+    class="relative order-1 aspect-[4/5] overflow-hidden rounded-sm bg-illustration-backdrop transition-shadow duration-[var(--duration-base)] ease-[var(--ease-out)] group-hover/card:shadow-elevation-1 group-focus-within/card:shadow-elevation-1"
+  >
+    <Packshot colorway={product.colorway} name={product.name} origin={origin} size="card" loading={loading} />
+
+    {
+      (product.badges.length > 0 || soldOut) && (
+        <div class="pointer-events-none absolute top-4 left-4 flex flex-wrap gap-1 pr-4">
+          {product.badges.map((badge) => (
+            <span class={badgeClasses('inverse')}>{t(badgeKeys[badge])}</span>
+          ))}
+          {soldOut && <span class={badgeClasses('neutral')}>{t('pdp/sold-out')}</span>}
+        </div>
+      )
+    }
+
+    {
+      quickAdd && (
+        <div class="absolute right-4 bottom-4 z-10 transition-[opacity,translate] duration-[var(--duration-base)] ease-[var(--ease-out)] [@media(hover:hover)]:translate-y-1 [@media(hover:hover)]:opacity-0 group-hover/card:translate-y-0 group-hover/card:opacity-100 group-focus-within/card:translate-y-0 group-focus-within/card:opacity-100">
+          <QuickAddButton
+            client:paint
+            sku={quickAdd.sku}
+            productId={product.id}
+            name={product.name}
+            max={quickAdd.max}
+            locale={locale}
+            label={quickAdd.label}
+          />
+        </div>
+      )
+    }
+  </div>
+</article>

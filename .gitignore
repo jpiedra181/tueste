@@ -1,0 +1,27 @@
+# build
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# tests y auditorías
+playwright-report/
+test-results/
+blob-report/
+.lighthouseci/
+
+# logs
+npm-debug.log*
+
+# entorno
+.env
+.env.*
+!.env.example
+
+# sistema
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.netlify/

@@ -1,0 +1,62 @@
+---
+/**
+ * Portada (no está en Figma): titular editorial + rejilla de cafés, solo con piezas del sistema.
+ * Muestra los mismos cafés que /es/cafes; cada URL lleva su propio canónico (BaseLayout).
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeader from '@/components/layout/SectionHeader.astro';
+import ProductCard from '@/components/product/ProductCard.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { buttonClasses } from '@/components/ui/button';
+import { routePath, useTranslations, type Locale } from '@/i18n';
+import { buildCartCatalog, getProducts } from '@/lib/catalog';
+
+const locale: Locale = 'es';
+const t = useTranslations(locale);
+const products = await getProducts();
+const catalog = buildCartCatalog(products, locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('common/brand')}
+  description={t('home/lede')}
+  alternatePath={routePath('en', { name: 'home' })}
+  catalog={catalog}
+>
+  <section aria-labelledby="home-title" class="container-page pt-12 pb-16 lg:pt-20 lg:pb-24">
+    <SectionHeader
+      level={1}
+      size="display"
+      id="home-title"
+      eyebrow={t('home/eyebrow')}
+      title={t('home/title')}
+      lede={t('home/lede')}
+    >
+      <a href="#cafes" class={buttonClasses({ variant: 'primary', size: 'lg' })}>{t('cart/empty-cta')}</a>
+      <a href={routePath(locale, { name: 'soon' })} class={buttonClasses({ variant: 'secondary', size: 'lg' })}>
+        {t('cart/empty-secondary')}
+      </a>
+    </SectionHeader>
+  </section>
+
+  <section id="cafes" aria-labelledby="home-grid-title" class="bg-bg-subtle py-16 lg:py-30">
+    <div class="container-page flex flex-col gap-8 lg:gap-10">
+      <SectionHeader id="home-grid-title" eyebrow={t('listing/eyebrow')} title={t('home/grid-title')}>
+        <a slot="aside" href={routePath(locale, { name: 'listing' })} class={buttonClasses({ variant: 'ghost', size: 'md' })}>
+          {t('related/view-all')}
+          <Icon name="arrow-right" size={20} />
+        </a>
+      </SectionHeader>
+      <ul role="list" class="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-12 xl:grid-cols-4">
+        {
+          products.map((product) => (
+            <li>
+              <ProductCard product={product} locale={locale} headingLevel={3} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

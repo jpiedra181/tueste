@@ -1,0 +1,53 @@
+---
+/**
+ * Roast Scale (Figma 24:7318): pista Claro · Medio · Oscuro con un marcador en uno de los 5 niveles.
+ * El marcador se centra en el 10, 30, 50, 70 o 90 % de la pista, como las variantes de Figma.
+ * Para lectores de pantalla solo se anuncia "Nivel de tueste: Claro-medio".
+ */
+import markerUrl from '@/assets/ui/roast-marker.svg?url';
+import { roastLevels, type RoastLevel } from '@/lib/schemas';
+
+interface Props {
+  level: RoastLevel;
+  /** Título visible ("Nivel de tueste"). */
+  title: string;
+  /** Etiquetas de la pista: [Claro, Medio, Oscuro]. */
+  labels: [string, string, string];
+  /** "Nivel de tueste: Claro-medio" */
+  a11yLabel: string;
+  class?: string;
+}
+
+const { level, title, labels, a11yLabel, class: className } = Astro.props;
+const index = Math.max(0, roastLevels.indexOf(level));
+const markerLeft = `calc(${10 + index * 20}% - 9px)`;
+---
+
+<div class:list={['flex flex-col gap-3 lg:gap-4', className]}>
+  <p class="sr-only">{a11yLabel}</p>
+  <p class="type-label-m-strong text-text-primary" aria-hidden="true">
+    {title}
+  </p>
+  <div class="flex flex-col gap-2" aria-hidden="true">
+    <div class="relative flex gap-0.5">
+      <span class="h-2 min-w-px flex-1 rounded-l-sm bg-illustration-ochre"></span>
+      <span class="h-2 min-w-px flex-1 bg-illustration-bean"></span>
+      <span class="h-2 min-w-px flex-1 rounded-r-sm bg-illustration-ink-shade"></span>
+      <img
+        src={markerUrl}
+        alt=""
+        width="18"
+        height="18"
+        loading="lazy"
+        decoding="async"
+        class="absolute -top-[5px] block size-[18px]"
+        style={`left: ${markerLeft}`}
+      />
+    </div>
+    <div class="flex justify-between gap-2 type-overline-s text-text-tertiary">
+      <span>{labels[0]}</span>
+      <span>{labels[1]}</span>
+      <span>{labels[2]}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+---
+/**
+ * Columna de información de la ficha (Figma "Product Info": desktop 25:1762 · mobile 29:1729):
+ * badges, eyebrow, h1, subtítulo, valoración (enlaza a #reviews), divisor, Purchase Panel y acordeones.
+ */
+import { formatDecimal, formatPrice, useTranslations, type Locale } from '@/i18n';
+import { FREE_SHIPPING_THRESHOLD } from '@/lib/pricing';
+import type { BadgeKind, Product } from '@/lib/schemas';
+import Badge from '@/components/ui/Badge.astro';
+import type { BadgeTone } from '@/components/ui/badge';
+import { RatingStars } from '@/components/ui/RatingStars';
+import Accordion from './Accordion.astro';
+import PurchasePanel, { type PanelProduct } from './PurchasePanel';
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  class?: string;
+}
+
+const { product, locale, class: className } = Astro.props;
+const t = useTranslations(locale);
+
+const badgeStyle: Record<BadgeKind, { tone: BadgeTone; label: string }> = {
+  new: { tone: 'accent', label: t('badge/new') },
+  limited: { tone: 'neutral', label: t('badge/limited') },
+  bestseller: { tone: 'inverse', label: t('badge/bestseller') },
+};
+
+const average = formatDecimal(product.rating.average, locale);
+const ratingLabel = t('a11y/rating', { value: average });
+
+// Umbral sin decimales, como en Figma ("35 €" | "€35").
+const threshold = formatPrice(FREE_SHIPPING_THRESHOLD, locale, { trimZeros: true });
+
+// La isla recibe solo lo que usa (sin textos en otros idiomas, origen ni reseñas).
+const panelProduct: PanelProduct = {
+  id: product.id,
+  name: product.name,
+  options: product.options,
+  variants: product.variants.map(({ sku, grind, size, grams, price, compareAtPrice, stock }) => ({
+    sku,
+    grind,
+    size,
+    grams,
+    price,
+    stock,
+    ...(compareAtPrice !== undefined && { compareAtPrice }),
+  })),
+  defaultSku: product.defaultSku,
+  subscription: product.subscription,
+  roastedOn: product.roastedOn,
+};
+---
+
+<div class:list={['flex flex-col gap-6 lg:gap-8', className]}>
+  {
+    product.badges.length > 0 && (
+      <ul class="flex flex-wrap gap-2">
+        {product.badges.map((badge) => (
+          <li>
+            <Badge tone={badgeStyle[badge].tone}>{badgeStyle[badge].label}</Badge>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <div class="flex flex-col gap-2 lg:gap-3">
+    <p class="type-overline-s text-text-accent lg:type-overline-m">{product.eyebrow[locale]}</p>
+    <h1 class="type-display-m text-text-primary lg:type-display-l">{product.name}</h1>
+    <p class="type-body-m text-text-secondary lg:type-body-l">{product.subtitle[locale]}</p>
+    <div class="flex items-center gap-2 lg:gap-3 lg:pt-1">
+      <span class="inline-flex lg:hidden"><RatingStars value={product.rating.average} size="sm" label={ratingLabel} /></span>
+      <span class="hidden lg:inline-flex"><RatingStars value={product.rating.average} size="md" label={ratingLabel} /></span>
+      <a
+        href="#reviews"
+        class="-my-1 py-1 type-label-s text-text-secondary underline decoration-from-font underline-offset-2 transition-colors duration-[var(--duration-fast)] hover:text-text-primary"
+      >
+        {t('pdp/rating-summary', { average, count: product.rating.count })}
+      </a>
+    </div>
+  </div>
+
+  <hr class="h-px border-0 bg-border-default" />
+
+  <PurchasePanel client:paint locale={locale} product={panelProduct} />
+
+  <div class="flex flex-col lg:pt-2">
+    <Accordion title={t('pdp/brew-title')} open>{product.brew[locale]}</Accordion>
+    <Accordion title={t('pdp/shipping-title')}>{t('pdp/shipping-body', { threshold })}</Accordion>
+    <Accordion title={t('pdp/roastery-title')}>{t('pdp/roastery-body')}</Accordion>
+  </div>
+</div>

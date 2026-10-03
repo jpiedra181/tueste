@@ -1,0 +1,23 @@
+---
+/** Checkout Header (Figma 27:6623 / 31:3085): logo enlazado a la portada y "Pago seguro". */
+import Logo from '@/components/ui/Logo.astro';
+import Icon from '@/components/ui/Icon.astro';
+import { routePath, useTranslations, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<header class="lg:border-b lg:border-border-subtle">
+  <div class="mx-auto flex w-full max-w-[90rem] items-center justify-between px-5 py-3 md:px-10 lg:px-20 lg:py-5">
+    <Logo href={routePath(locale, { name: 'home' })} />
+    <p class="flex items-center gap-1.5 text-text-secondary lg:gap-2">
+      <Icon name="lock" size={16} />
+      <span class="type-label-s lg:type-label-m">{t('checkout/secure')}</span>
+    </p>
+  </div>
+</header>

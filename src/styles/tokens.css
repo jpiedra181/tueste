@@ -1,0 +1,203 @@
+/*
+ * Tokens de Tueste · Design System v1.0
+ * Fuente: Figma (colecciones Primitives, Theme/Light y Dimensions, estilos de texto y de efecto).
+ * Los nombres siguen la ruta de Figma con "/" → "-", los mismos que muestra Dev Mode
+ * (Figma `text/primary` → `--color-text-primary` → utilidad `text-text-primary`).
+ *
+ * Ajustes de accesibilidad respecto a Figma (WCAG 2.2 AA), marcados con [a11y]:
+ *   1. text/tertiary #7d6e62 → #73655a (4,40:1 → 5,04:1 sobre bg/page; 4,58:1 sobre bg/subtle).
+ *   2. Texto sobre relleno accent: usar action/accent-hover #a8472a (5,64:1) en vez de #c45a34 (4,18:1).
+ *   3. Foco: contorno sólido de 2 px con border/focus + halo alpha/focus (el halo solo daba 1,55:1).
+ *   4. Borde de campos de formulario: border/input #908174 (≥ 3:1) en vez de border/default (1,66:1).
+ */
+
+:root {
+  /* Primitives */
+  --palette-espresso-950: #15110e;
+  --palette-espresso-900: #221c17;
+  --palette-espresso-800: #3a302a;
+  --palette-espresso-700: #54473e;
+  --palette-espresso-600: #73655a; /* [a11y] no existe en Figma: tertiary accesible */
+  --palette-espresso-500: #7d6e62;
+  --palette-espresso-450: #908174; /* [a11y] no existe en Figma: borde de campos */
+  --palette-espresso-400: #9c8d80;
+  --palette-espresso-300: #bfb2a4;
+  --palette-cream-50: #fdfbf7;
+  --palette-cream-100: #f7f2ea;
+  --palette-cream-200: #efe7da;
+  --palette-cream-300: #e3d8c7;
+  --palette-cream-400: #d2c4af;
+  --palette-terracotta-700: #8c3a20;
+  --palette-terracotta-600: #a8472a;
+  --palette-terracotta-500: #c45a34;
+  --palette-terracotta-300: #e09a79;
+  --palette-terracotta-100: #f6e0d4;
+  --palette-sage-700: #3f5b47;
+  --palette-sage-500: #7c957d;
+  --palette-sage-300: #b5c4b0;
+  --palette-sage-100: #e3eadf;
+  --palette-ochre-600: #b88523;
+  --palette-ochre-500: #d9a642;
+  --palette-ochre-100: #f7eacb;
+  --palette-blue-800: #354b5c;
+  --palette-blue-600: #4d6b82;
+  --palette-blue-300: #a9bdcb;
+  --palette-plum-800: #4e2c3c;
+  --palette-plum-600: #6e3f55;
+  --palette-plum-300: #c9a3b3;
+  --palette-red-600: #b42318;
+  --palette-red-100: #fbe3e0;
+  --palette-green-600: #2e6a47;
+  --palette-green-100: #ddede0;
+  --palette-bean-600: #6b4430;
+  --palette-bean-900: #2e1c12;
+  --palette-white: #ffffff;
+  --palette-alpha-scrim: #15110e80;
+  --palette-alpha-focus: #c45a3459;
+
+  /* Dimensions que no son utilidades de Tailwind */
+  --border-width-default: 1px;
+  --border-width-thick: 2px;
+  --size-icon-sm: 16px;
+  --size-icon-md: 20px;
+  --size-icon-lg: 24px;
+  --size-control-sm: 36px;
+  --size-control-md: 48px;
+  --size-control-lg: 56px;
+
+  /* Movimiento (no está en Figma: definido para las microinteracciones) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-base: 220ms;
+  --duration-slow: 320ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}
+
+@theme {
+  /* Solo colores del sistema: sin la paleta por defecto de Tailwind. */
+  --color-*: initial;
+  --color-white: var(--palette-white);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Theme / bg */
+  --color-bg-page: var(--palette-cream-100);
+  --color-bg-surface: var(--palette-cream-50);
+  --color-bg-subtle: var(--palette-cream-200);
+  --color-bg-muted: var(--palette-cream-300);
+  --color-bg-inverse: var(--palette-espresso-900);
+  --color-bg-inverse-subtle: var(--palette-espresso-800);
+  --color-bg-accent: var(--palette-terracotta-500);
+  --color-bg-accent-subtle: var(--palette-terracotta-100);
+  --color-bg-success-subtle: var(--palette-green-100);
+  --color-bg-error-subtle: var(--palette-red-100);
+  --color-bg-warning-subtle: var(--palette-ochre-100);
+  --color-bg-disabled: var(--palette-cream-200);
+  --color-bg-scrim: var(--palette-alpha-scrim);
+
+  /* Theme / action */
+  --color-action-primary: var(--palette-espresso-900);
+  --color-action-primary-hover: var(--palette-espresso-700);
+  --color-action-primary-pressed: var(--palette-espresso-950);
+  --color-action-secondary-hover: var(--palette-cream-200);
+  --color-action-secondary-pressed: var(--palette-cream-300);
+  --color-action-accent: var(--palette-terracotta-500);
+  --color-action-accent-hover: var(--palette-terracotta-600);
+
+  /* Theme / text */
+  --color-text-primary: var(--palette-espresso-900);
+  --color-text-secondary: var(--palette-espresso-700);
+  --color-text-tertiary: var(--palette-espresso-600); /* [a11y] Figma: espresso/500 */
+  --color-text-disabled: var(--palette-espresso-300);
+  --color-text-inverse: var(--palette-cream-50);
+  --color-text-inverse-muted: var(--palette-cream-400);
+  --color-text-accent: var(--palette-terracotta-600);
+  --color-text-success: var(--palette-green-600);
+  --color-text-error: var(--palette-red-600);
+  --color-text-on-accent: var(--palette-cream-50);
+
+  /* Theme / border */
+  --color-border-subtle: var(--palette-cream-300);
+  --color-border-default: var(--palette-cream-400);
+  --color-border-strong: var(--palette-espresso-400);
+  --color-border-input: var(--palette-espresso-450); /* [a11y] no existe en Figma */
+  --color-border-focus: var(--palette-espresso-900);
+  --color-border-selected: var(--palette-espresso-900);
+  --color-border-error: var(--palette-red-600);
+  --color-border-success: var(--palette-green-600);
+  --color-border-accent: var(--palette-terracotta-500);
+  --color-border-inverse: var(--palette-cream-50);
+  --color-border-inverse-subtle: var(--palette-espresso-700);
+
+  /* Theme / icon */
+  --color-icon-primary: var(--palette-espresso-900);
+  --color-icon-secondary: var(--palette-espresso-500);
+  --color-icon-inverse: var(--palette-cream-50);
+  --color-icon-accent: var(--palette-terracotta-500);
+  --color-icon-disabled: var(--palette-espresso-300);
+  --color-icon-success: var(--palette-green-600);
+  --color-icon-error: var(--palette-red-600);
+
+  /* Theme / rating */
+  --color-rating-filled: var(--palette-terracotta-500);
+  --color-rating-empty: var(--palette-cream-400);
+
+  /* Theme / illustration */
+  --color-illustration-terracotta: var(--palette-terracotta-500);
+  --color-illustration-terracotta-shade: var(--palette-terracotta-700);
+  --color-illustration-sage: var(--palette-sage-500);
+  --color-illustration-sage-shade: var(--palette-sage-700);
+  --color-illustration-ochre: var(--palette-ochre-500);
+  --color-illustration-ochre-shade: var(--palette-ochre-600);
+  --color-illustration-blue: var(--palette-blue-600);
+  --color-illustration-blue-shade: var(--palette-blue-800);
+  --color-illustration-plum: var(--palette-plum-600);
+  --color-illustration-plum-shade: var(--palette-plum-800);
+  --color-illustration-ink: var(--palette-espresso-800);
+  --color-illustration-ink-shade: var(--palette-espresso-950);
+  --color-illustration-label: var(--palette-cream-50);
+  --color-illustration-bean: var(--palette-bean-600);
+  --color-illustration-bean-crease: var(--palette-bean-900);
+  --color-illustration-backdrop: var(--palette-cream-200);
+  --color-illustration-map-land: var(--palette-sage-300);
+  --color-illustration-map-dot: var(--palette-espresso-300);
+  --color-illustration-map-highlight: var(--palette-terracotta-500);
+  --color-illustration-leaf: var(--palette-sage-700);
+
+  /* Dimensions / radius (sustituye la escala por defecto de Tailwind) */
+  --radius-*: initial;
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  /* Dimensions / space: Figma space/N = utilidad de Tailwind N (p-4 = 16px, gap-30 = 120px). */
+  --spacing: 0.25rem;
+
+  /* Effect styles */
+  --shadow-*: initial;
+  --shadow-elevation-1: 0 1px 2px #15110e0f, 0 4px 12px #15110e0f;
+  --shadow-elevation-2: 0 2px 6px #15110e14, 0 12px 32px -4px #15110e29;
+  --shadow-elevation-3: -12px 0 48px #15110e2e;
+
+  /* Familias (las variables --font-* las genera la API de fuentes de Astro) */
+  --font-*: initial;
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-instrument-sans);
+  --font-mono: var(--font-plex-mono);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}

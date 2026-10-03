@@ -1,0 +1,18 @@
+---
+import { badgeClasses, type BadgeTone } from './badge';
+import Icon from './Icon.astro';
+import type { IconName } from '@/lib/icons';
+
+interface Props {
+  tone?: BadgeTone;
+  icon?: IconName;
+  class?: string;
+}
+
+const { tone = 'neutral', icon, class: className } = Astro.props;
+---
+
+<span class={badgeClasses(tone, className)}>
+  {icon && <Icon name={icon} size={12} />}
+  <slot />
+</span>

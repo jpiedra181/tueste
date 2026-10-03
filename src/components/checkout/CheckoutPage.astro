@@ -1,0 +1,62 @@
+---
+/** Página del checkout (la usan /es/checkout y /en/checkout). */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { buildCartCatalog, getProducts } from '@/lib/catalog';
+import { otherLocale, routePath, useTranslations, type Locale } from '@/i18n';
+import { buttonClasses } from '@/components/ui/button';
+import { CART_STORAGE_KEY } from '@/stores/cart';
+import CheckoutApp from './CheckoutApp';
+import CheckoutFooter from './CheckoutFooter.astro';
+import CheckoutHeader from './CheckoutHeader.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const catalog = buildCartCatalog(await getProducts(), locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={t('cart/checkout')}
+  description={t('checkout/meta-description')}
+  alternatePath={routePath(otherLocale(locale), { name: 'checkout' })}
+  catalog={catalog}
+  chrome="checkout"
+  noindex
+>
+  <!--
+    Antes del primer pintado: con la cesta vacía se muestra el aviso estático en lugar del formulario.
+    Así no hay un destello del formulario ni salto de contenido al hidratar (CLS 0, LCP inmediato).
+  -->
+  <script is:inline slot="head" define:vars={{ key: CART_STORAGE_KEY }}>
+    try {
+      const lines = JSON.parse(localStorage.getItem(key) || '[]');
+      if (!Array.isArray(lines) || lines.length === 0)
+        document.documentElement.setAttribute('data-cart-empty', '');
+    } catch {
+      document.documentElement.setAttribute('data-cart-empty', '');
+    }
+  </script>
+  <CheckoutHeader slot="header" locale={locale} />
+  <h1 class="sr-only">{t('cart/checkout')}</h1>
+
+  <div data-checkout-empty class="container-page min-h-dvh pt-6 pb-12 lg:pt-12 lg:pb-20">
+    <div class="flex flex-col items-start gap-6 rounded-md border border-border-default bg-bg-surface p-6 lg:p-8">
+      <p class="type-body-l text-text-primary">{t('checkout/empty')}</p>
+      <a
+        href={routePath(locale, { name: 'listing' })}
+        class={buttonClasses({ variant: 'primary', size: 'md' })}
+      >
+        {t('cart/empty-cta')}
+      </a>
+    </div>
+  </div>
+
+  <div data-checkout-app>
+    <CheckoutApp client:load locale={locale} catalog={catalog} />
+  </div>
+  <CheckoutFooter slot="footer" locale={locale} />
+</BaseLayout>

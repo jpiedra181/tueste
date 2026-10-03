@@ -1,0 +1,124 @@
+---
+/**
+ * Reseñas (Figma desktop 25:2102 · mobile 29:2064). Sección con id "reviews": la valoración de la
+ * cabecera de la ficha enlaza aquí.
+ * El servidor pinta cabecera, media y estrellas; la isla ReviewsList (client:visible) añade los filtros,
+ * la lista (3 reseñas en el HTML inicial) y "Ver más reseñas".
+ * Desktop: rejilla de 2 columnas (resumen 360 px | lista). Mobile: todo en columna.
+ */
+import type { Locale, UIKey } from '@/i18n';
+import { formatDate, formatDecimal, routePath, useTranslations } from '@/i18n';
+import type { Grind, Product, Review, Size } from '@/lib/schemas';
+import { RatingStars } from '@/components/ui/RatingStars';
+import { buttonClasses } from '@/components/ui/button';
+import SectionHeader from './sections/SectionHeader.astro';
+import ReviewsList, { type RatingFilterItem, type ReviewItem, type Stars } from './sections/ReviewsList';
+
+interface Props {
+  product: Product;
+  reviews: Review[];
+  locale: Locale;
+}
+
+const { product, reviews, locale } = Astro.props;
+const t = useTranslations(locale);
+const titleId = 'reviews-title';
+const { rating } = product;
+const average = formatDecimal(rating.average, locale);
+const averageLabel = t('a11y/rating', { value: average });
+
+const grindKey: Record<Grind, UIKey> = {
+  beans: 'pdp/grind-beans',
+  espresso: 'pdp/grind-espresso',
+  filter: 'pdp/grind-filter',
+};
+const sizeKey: Record<Size, UIKey> = { '250g': 'pdp/size-250g', '1kg': 'pdp/size-1kg' };
+
+/** Variante comprada a partir del SKU: "Filtro · 250 g". */
+function variantDetail(sku: string): string {
+  const variant = product.variants.find((v) => v.sku === sku);
+  return variant ? `${t(grindKey[variant.grind])} · ${t(sizeKey[variant.size])}` : '';
+}
+
+const items: ReviewItem[] = reviews.map((review) => ({
+  id: review.id,
+  rating: review.rating,
+  ratingLabel: t('a11y/rating', { value: review.rating }),
+  title: review.title[locale],
+  body: review.body[locale],
+  author: review.author,
+  date: review.date,
+  dateText: formatDate(review.date, locale, 'day-month-year'),
+  verified: review.verified,
+  detail: variantDetail(review.sku),
+}));
+
+const starsOrder: Stars[] = [5, 4, 3, 2, 1];
+const filters: RatingFilterItem[] = starsOrder.map((stars) => {
+  const count = rating.distribution[stars];
+  return {
+    stars,
+    count,
+    percent: rating.count > 0 ? Math.round((count / rating.count) * 1000) / 10 : 0,
+    // a11y/stars-filter y reviews/filtering eligen el plural solo por {count}; aquí "1 estrella"
+    // y "5 estrellas, 1 reseña" salen bien con claves separadas.
+    label: `${t('reviews/stars-n', { count: stars })}, ${t('reviews/reviews-n', { count })}`,
+    filtering: t(stars === 1 ? 'reviews/filtering-1' : 'reviews/filtering', { stars, count }),
+  };
+});
+---
+
+<section id="reviews" aria-labelledby={titleId} class="border-t border-border-default">
+  <div class="container-page flex flex-col gap-6 py-16 lg:grid lg:grid-cols-[360px_minmax(0,1fr)] lg:grid-rows-[auto_auto_auto_auto_1fr] lg:gap-x-20 lg:py-30">
+    <SectionHeader
+      class="lg:col-start-1 lg:row-start-1"
+      eyebrow={t('reviews/eyebrow')}
+      title={t('reviews/title')}
+      id={titleId}
+    />
+
+    <div class="flex items-center gap-4 lg:col-start-1 lg:row-start-2">
+      {/* La cifra es visual: las estrellas llevan el texto accesible "4,8 de 5 estrellas". */}
+      <p class="type-display-m text-text-primary lg:type-display-l" aria-hidden="true">
+        {average}
+      </p>
+      <div class="flex flex-col gap-1">
+        <span class="lg:hidden">
+          <RatingStars value={rating.average} size="md" label={averageLabel} />
+        </span>
+        <span class="hidden lg:block">
+          <RatingStars value={rating.average} size="lg" label={averageLabel} />
+        </span>
+        <p class="type-body-s text-text-tertiary">{t('reviews/count', { count: rating.count })}</p>
+      </div>
+    </div>
+
+    <ReviewsList
+      client:visible
+      reviews={items}
+      filters={filters}
+      text={{
+        filterLabel: t('reviews/filter-label'),
+        clear: t('reviews/clear'),
+        sort: t('reviews/sort'),
+        loadMore: t('reviews/load-more'),
+        verified: t('reviews/verified'),
+        emptyFilter: t('reviews/empty-filter'),
+        cleared: t('reviews/cleared'),
+      }}
+    />
+
+    {/* Mobile: botón fantasma a todo el ancho tras la lista. Desktop: secundario bajo los filtros. */}
+    <a
+      href={routePath(locale, { name: 'soon' })}
+      class={buttonClasses({
+        variant: 'ghost',
+        size: 'md',
+        className:
+          'w-full lg:col-start-1 lg:row-start-4 lg:w-auto lg:justify-self-start lg:border lg:border-border-selected',
+      })}
+    >
+      {t('reviews/write')}
+    </a>
+  </div>
+</section>

@@ -1,0 +1,118 @@
+---
+/**
+ * Pie de tienda (Figma "Footer" 22:1665 · Desktop 22:1559 / Mobile 22:1615). Superficie espresso
+ * con tokens inverse; `on-inverse` cambia el color del foco global.
+ * Móvil: dos columnas de enlaces (Tienda y Ayuda, como en Figma); "Tostadero" aparece desde md.
+ */
+import Icon from '@/components/ui/Icon.astro';
+import Logo from '@/components/ui/Logo.astro';
+import NewsletterForm from './NewsletterForm';
+import { routePath, useTranslations, type Locale, type UIKey } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  alternatePath: string;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const listing = routePath(locale, { name: 'listing' });
+const soon = routePath(locale, { name: 'soon' });
+
+interface Column {
+  title: UIKey;
+  links: { label: UIKey; href: string }[];
+  /** Figma móvil solo muestra dos columnas. */
+  fromTablet?: boolean;
+}
+
+const columns: Column[] = [
+  {
+    title: 'footer/col-shop',
+    links: [
+      { label: 'footer/link-coffee', href: listing },
+      { label: 'footer/link-subscriptions', href: soon },
+      { label: 'footer/link-gear', href: soon },
+      { label: 'footer/link-gift', href: soon },
+    ],
+  },
+  {
+    title: 'footer/col-help',
+    links: [
+      { label: 'footer/link-shipping', href: soon },
+      { label: 'footer/link-returns', href: soon },
+      { label: 'footer/link-contact', href: soon },
+      { label: 'footer/link-faq', href: soon },
+    ],
+  },
+  {
+    title: 'footer/col-roastery',
+    fromTablet: true,
+    links: [
+      { label: 'footer/link-story', href: soon },
+      { label: 'footer/link-visit', href: soon },
+      { label: 'footer/link-journal', href: soon },
+      { label: 'footer/link-wholesale', href: soon },
+    ],
+  },
+];
+
+const newsletterLabels = {
+  email: t('a11y/footer-newsletter-email'),
+  placeholder: t('form/email-placeholder'),
+  submit: t('footer/subscribe'),
+  required: t('validation/required'),
+  invalid: t('validation/email'),
+  thanks: t('footer/newsletter-thanks'),
+};
+---
+
+<footer class="on-inverse bg-bg-inverse text-text-inverse">
+  <div
+    class="mx-auto flex w-full max-w-[90rem] flex-col gap-10 px-5 pt-12 pb-8 md:px-10 lg:gap-16 lg:px-20 lg:pt-20 lg:pb-10"
+  >
+    <div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-16">
+      <section aria-labelledby="footer-newsletter-title" class="flex flex-col items-start gap-4 lg:w-[30rem] lg:shrink-0">
+        <Logo tone="inverse" href={routePath(locale, { name: 'home' })} />
+        <h2 id="footer-newsletter-title" class="type-heading-h2 text-text-inverse">{t('footer/newsletter-title')}</h2>
+        <p class="type-body-m text-text-inverse-muted">{t('footer/newsletter-body')}</p>
+        <NewsletterForm client:visible labels={newsletterLabels} />
+      </section>
+
+      <div class="grid grid-cols-2 gap-6 md:grid-cols-3 lg:flex lg:flex-1 lg:justify-end lg:gap-16">
+        {
+          columns.map((column) => (
+            <div class:list={['flex-col gap-3', column.fromTablet ? 'hidden md:flex' : 'flex']}>
+              <h2 class="type-overline-s text-text-inverse-muted">{t(column.title)}</h2>
+              <ul class="flex flex-col gap-3">
+                {column.links.map((link) => (
+                  <li>
+                    <a
+                      href={link.href}
+                      class="-my-0.5 inline-block rounded-xs py-0.5 type-body-s whitespace-nowrap text-text-inverse underline-offset-4 hover:underline"
+                    >
+                      {t(link.label)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="h-px w-full bg-border-inverse-subtle" aria-hidden="true"></div>
+
+    <div class="flex flex-col items-start gap-4 lg:flex-row lg:items-center">
+      <p class="type-body-xs text-text-inverse-muted lg:flex-1">{t('footer/legal')}</p>
+      <p class="flex items-center gap-1.5 type-body-xs whitespace-nowrap text-text-inverse-muted">
+        <Icon name="globe" size={16} />
+        {t('footer/locale')}
+      </p>
+      <a href={soon} class="-m-2 inline-flex rounded-sm p-2 text-icon-inverse" aria-label="Instagram">
+        <Icon name="instagram" size={20} />
+      </a>
+    </div>
+  </div>
+</footer>

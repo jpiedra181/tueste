@@ -1,0 +1,128 @@
+---
+/**
+ * Cabecera de tienda (Figma "Header" 22:1552 · Desktop 22:1472 / Mobile 22:1517).
+ * Barra de anuncio + navegación. No es sticky (en Figma no está fijada al hacer scroll).
+ * - Móvil (< lg): menú | logo | buscar + cesta. El menú es la isla MobileMenu (<dialog> modal) y
+ *   solo se hidrata en móvil; su contenido se renderiza aquí, en el servidor.
+ * - Desktop: logo | enlaces | idioma, buscar, cuenta y cesta.
+ * Alturas como en Figma: 105 px en móvil y 119 px en desktop.
+ */
+import CartButton from '@/components/cart/CartButton';
+import Icon from '@/components/ui/Icon.astro';
+import Logo from '@/components/ui/Logo.astro';
+import { iconButtonClasses, iconButtonIconSize } from '@/components/ui/button';
+import { formatPrice, routePath, useTranslations, type Locale, type UIKey } from '@/i18n';
+import { FREE_SHIPPING_THRESHOLD } from '@/lib/pricing';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import MobileMenu from './MobileMenu';
+
+interface Props {
+  locale: Locale;
+  alternatePath: string;
+}
+
+const { locale, alternatePath } = Astro.props;
+const t = useTranslations(locale);
+const home = routePath(locale, { name: 'home' });
+const listing = routePath(locale, { name: 'listing' });
+const soon = routePath(locale, { name: 'soon' });
+// Con build.format 'file' la ruta interna puede terminar en .html.
+const currentPath = Astro.url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') || '/';
+
+const links: { label: UIKey; href: string }[] = [
+  { label: 'nav/shop', href: listing },
+  { label: 'nav/subscriptions', href: soon },
+  { label: 'nav/roastery', href: soon },
+  { label: 'nav/journal', href: soon },
+];
+// "Tienda" es la única sección con página propia; las demás comparten "próximamente".
+const isCurrent = (href: string) => href === listing && currentPath === listing;
+const iconButton = iconButtonClasses({ variant: 'ghost', size: 'md' });
+// Figma: «35 €» / «€35». Importe redondo sin decimales: así el anuncio cabe en una línea a 390 px.
+const threshold = formatPrice(FREE_SHIPPING_THRESHOLD, locale, { trimZeros: true });
+---
+
+<header class="bg-bg-page">
+  <div class="bg-bg-inverse px-4 py-2 text-center text-text-inverse lg:px-5">
+    <p class="type-body-xs lg:type-overline-s">
+      {t('nav/announcement', { threshold })}
+    </p>
+  </div>
+
+  <div class="border-b border-border-subtle">
+    <div class="mx-auto flex w-full max-w-[90rem] items-center justify-between px-3 py-2 md:px-8 lg:px-20 lg:py-4">
+      <MobileMenu
+        client:paint
+        title={t('layout/menu')}
+        openLabel={t('a11y/open-menu')}
+        closeLabel={t('a11y/close-menu')}
+      >
+        <nav aria-label={t('a11y/main-nav')}>
+          <ul class="border-t border-border-subtle">
+            {
+              links.map((link) => (
+                <li class="border-b border-border-subtle">
+                  <a
+                    href={link.href}
+                    aria-current={isCurrent(link.href) ? 'page' : undefined}
+                    class="flex items-center justify-between gap-4 py-4 type-heading-h3 text-text-primary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:text-text-accent aria-[current=page]:text-text-accent"
+                  >
+                    {t(link.label)}
+                    <Icon name="chevron-right" size={20} class="text-icon-secondary" />
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <ul class="mt-6 flex flex-col">
+          <li>
+            <a
+              href={soon}
+              class="flex min-h-12 items-center gap-3 rounded-sm py-3 type-label-l text-text-primary transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:text-text-accent"
+            >
+              <Icon name="user" size={20} class="text-icon-secondary" />
+              {t('nav/account')}
+            </a>
+          </li>
+          <li>
+            <LanguageSwitcher locale={locale} alternatePath={alternatePath} variant="full" />
+          </li>
+        </ul>
+        <p class="mt-auto pt-10 type-body-s text-text-tertiary">{t('footer/tagline')}</p>
+      </MobileMenu>
+
+      <Logo href={home} />
+
+      <nav aria-label={t('a11y/main-nav')} class="hidden lg:block">
+        <ul class="flex items-center gap-8">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  data-astro-prefetch={link.href === listing ? '' : undefined}
+                  aria-current={isCurrent(link.href) ? 'page' : undefined}
+                  class="inline-block rounded-xs py-3 type-label-m whitespace-nowrap text-text-primary decoration-1 underline-offset-[6px] transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:text-text-accent aria-[current=page]:underline"
+                >
+                  {t(link.label)}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="flex items-center gap-0.5">
+        <LanguageSwitcher locale={locale} alternatePath={alternatePath} class="max-lg:hidden" />
+        <a href={soon} class={iconButton} aria-label={t('nav/search')}>
+          <Icon name="search" size={iconButtonIconSize.md} />
+        </a>
+        <a href={soon} class={`${iconButton} max-lg:hidden`} aria-label={t('nav/account')}>
+          <Icon name="user" size={iconButtonIconSize.md} />
+        </a>
+        <CartButton client:paint locale={locale} />
+      </div>
+    </div>
+  </div>
+</header>

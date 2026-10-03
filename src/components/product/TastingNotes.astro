@@ -1,0 +1,83 @@
+---
+/**
+ * Notas de cata (Figma desktop 25:1968 · mobile 29:1935).
+ * Desktop: intro (cabecera + lede editorial) a la izquierda; notas, medidores y tueste a la derecha.
+ * Mobile: todo en columna y las notas en un carrusel horizontal con scroll-snap.
+ */
+import type { Locale, UIKey } from '@/i18n';
+import { useTranslations } from '@/i18n';
+import type { Product, RoastLevel } from '@/lib/schemas';
+import { TastingNoteArt } from '@/components/art/TastingNoteArt';
+import SectionHeader from './sections/SectionHeader.astro';
+import FlavorMeter from './sections/FlavorMeter.astro';
+import RoastScale from './sections/RoastScale.astro';
+import { carouselItemClasses, carouselListClasses, carouselRegionClasses } from './sections/carousel';
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  /** Solo RelatedProducts: cafés relacionados ya resueltos. */
+  related?: Product[];
+}
+
+const { product, locale } = Astro.props;
+const t = useTranslations(locale);
+const { tasting } = product;
+const titleId = 'tasting-title';
+
+const meters: Array<{ key: UIKey; value: number }> = [
+  { key: 'pdp/acidity', value: tasting.acidity },
+  { key: 'pdp/sweetness', value: tasting.sweetness },
+  { key: 'pdp/body', value: tasting.body },
+];
+
+const roastKey: Record<RoastLevel, UIKey> = {
+  light: 'pdp/roast-light',
+  'light-medium': 'pdp/roast-light-medium',
+  medium: 'pdp/roast-medium',
+  'medium-dark': 'pdp/roast-medium-dark',
+  dark: 'pdp/roast-dark',
+};
+---
+
+<section aria-labelledby={titleId} class="bg-bg-subtle">
+  <div class="container-page flex flex-col gap-8 py-16 lg:grid lg:grid-cols-[minmax(0,440fr)_minmax(0,776fr)] lg:items-start lg:gap-x-16 lg:py-30">
+    {/* Intro: en mobile sus hijos son elementos sueltos de la columna */}
+    <div class="contents lg:flex lg:flex-col lg:gap-6">
+      <SectionHeader eyebrow={t('pdp/tasting-eyebrow')} title={t('pdp/tasting-title')} id={titleId} />
+      <p class="type-quote-m text-text-primary lg:type-quote-l">{tasting.lede[locale]}</p>
+    </div>
+
+    <div class="contents lg:flex lg:min-w-0 lg:flex-col lg:gap-12">
+      <div role="region" aria-label={t('pdp/tasting-carousel')} tabindex="0" class={carouselRegionClasses}>
+        <ul role="list" class:list={[carouselListClasses, 'gap-6 lg:grid-cols-3 lg:gap-8']}>
+          {tasting.notes.map((note) => (
+            <li class:list={[carouselItemClasses, 'flex w-50 flex-col gap-3']}>
+              <div class="size-26 shrink-0">
+                <TastingNoteArt illustration={note.illustration} tone={note.tone} />
+              </div>
+              <h3 class="type-heading-h3 text-text-primary">{note.name[locale]}</h3>
+              <p class="type-body-s text-text-secondary">{note.description[locale]}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Perfil: medidores y tueste. Apilados hasta xl, en dos columnas desde xl como en Figma (1440) */}
+      <div class="contents lg:flex lg:flex-col lg:gap-8 xl:flex-row xl:gap-16">
+        <ul role="list" class="flex flex-col gap-4 xl:min-w-0 xl:flex-1">
+          {meters.map(({ key, value }) => (
+            <FlavorMeter label={t(key)} value={value} a11yLabel={t('a11y/meter', { label: t(key), value })} />
+          ))}
+        </ul>
+        <RoastScale
+          class="xl:min-w-0 xl:flex-1"
+          level={tasting.roast}
+          title={t('pdp/roast-level')}
+          labels={[t('pdp/roast-light'), t('pdp/roast-medium'), t('pdp/roast-dark')]}
+          a11yLabel={t('a11y/roast', { value: t(roastKey[tasting.roast]) })}
+        />
+      </div>
+    </div>
+  </div>
+</section>

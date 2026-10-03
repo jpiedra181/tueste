@@ -1,0 +1,50 @@
+---
+/**
+ * Raíz "/": lleva a la portada en el idioma del navegador (inglés si es el preferido; si no, español).
+ * En Netlify lo hace la regla de netlify.toml; esta página es la alternativa sin servidor
+ * (script inmediato + meta refresh + enlaces visibles si ambos fallan).
+ */
+import { htmlLang, routePath, translate } from '@/i18n';
+
+const es = routePath('es', { name: 'home' });
+const en = routePath('en', { name: 'home' });
+const site = Astro.site ?? new URL('https://tueste.netlify.app');
+---
+
+<!doctype html>
+<html lang={htmlLang.es}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{translate('es', 'common/brand')}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL(es, site).href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline define:vars={{ en }}>
+      if ((navigator.languages?.[0] ?? navigator.language ?? '').toLowerCase().startsWith('en')) location.replace(en);
+    </script>
+    <meta http-equiv="refresh" content={`0; url=${es}`} />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, sans-serif;
+        background: #f7f2ea;
+        color: #221c17;
+      }
+      a {
+        color: inherit;
+        padding: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <a href={es} hreflang="es" lang="es">{translate('es', 'a11y/language-es')}</a>
+      ·
+      <a href={en} hreflang="en" lang="en">{translate('en', 'a11y/language-en')}</a>
+    </p>
+  </body>
+</html>

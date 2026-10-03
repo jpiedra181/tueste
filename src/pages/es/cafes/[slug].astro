@@ -1,0 +1,20 @@
+---
+/** Ficha de producto en español: /es/cafes/<id>. La vista vive en src/views/ProductPage.astro. */
+import type { GetStaticPaths } from 'astro';
+import ProductPage from '@/views/ProductPage.astro';
+import { getProducts } from '@/lib/catalog';
+import type { Product } from '@/lib/schemas';
+
+export const getStaticPaths = (async () => {
+  const products = await getProducts();
+  return products.map((product) => ({ params: { slug: product.id }, props: { product } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+---
+
+<ProductPage locale="es" product={product} />

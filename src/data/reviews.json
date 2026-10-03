@@ -1,0 +1,296 @@
+[
+  {
+    "id": "hambela-01",
+    "productId": "hambela",
+    "rating": 5,
+    "author": "Marta G.",
+    "date": "2026-09-12",
+    "title": { "es": "Una fiesta de fruta", "en": "A fruit party" },
+    "body": {
+      "es": "En V60 es una locura: arándano clarísimo y un final floral que dura muchísimo. Ya voy por la tercera bolsa.",
+      "en": "On V60 it is wild: crystal-clear blueberry and a floral finish that lasts forever. Already on my third bag."
+    },
+    "sku": "HAM-FIL-250",
+    "verified": true
+  },
+  {
+    "id": "hambela-02",
+    "productId": "hambela",
+    "rating": 5,
+    "author": "Daniel R.",
+    "date": "2026-09-03",
+    "title": { "es": "Sorprendente en espresso", "en": "Surprising as espresso" },
+    "body": {
+      "es": "Lo tomo en espresso con ratio 1:2,2 y sale dulce, nada agresivo. El tueste es muy limpio.",
+      "en": "I pull it at a 1:2.2 ratio and it comes out sweet, never harsh. A very clean roast."
+    },
+    "sku": "HAM-ESP-1KG",
+    "verified": true
+  },
+  {
+    "id": "hambela-03",
+    "productId": "hambela",
+    "rating": 5,
+    "author": "Lucía M.",
+    "date": "2026-08-28",
+    "title": { "es": "Suscripción impecable", "en": "Flawless subscription" },
+    "body": {
+      "es": "Llega siempre dos días después del tueste. La bolsa compostable y la tarjeta de cata son un detalle precioso.",
+      "en": "It always arrives two days after roasting. The compostable bag and tasting card are a lovely touch."
+    },
+    "sku": "HAM-BEA-250",
+    "verified": true
+  },
+  {
+    "id": "hambela-04",
+    "productId": "hambela",
+    "rating": 4,
+    "author": "Javier P.",
+    "date": "2026-08-21",
+    "title": { "es": "Muy floral, pide molienda fina", "en": "Very floral, likes a fine grind" },
+    "body": {
+      "es": "Al principio me salía algo ácido; afinando la molienda dos puntos aparece todo el jazmín. Precioso.",
+      "en": "It came out a bit sour at first; two steps finer on the grinder and all the jasmine shows up. Lovely."
+    },
+    "sku": "HAM-BEA-250",
+    "verified": true
+  },
+  {
+    "id": "hambela-05",
+    "productId": "hambela",
+    "rating": 5,
+    "author": "Elena S.",
+    "date": "2026-08-14",
+    "title": { "es": "El mejor etíope del año", "en": "The best Ethiopian of the year" },
+    "body": {
+      "es": "Lo he probado en Aeropress, Chemex y V60 y en todos aguanta. La bergamota del final es adictiva.",
+      "en": "I have tried it in Aeropress, Chemex and V60 and it holds up in all of them. That bergamot finish is addictive."
+    },
+    "sku": "HAM-FIL-250",
+    "verified": true
+  },
+  {
+    "id": "hambela-06",
+    "productId": "hambela",
+    "rating": 3,
+    "author": "Rubén T.",
+    "date": "2026-08-02",
+    "title": { "es": "No es para mí", "en": "Not for me" },
+    "body": {
+      "es": "Está muy bien hecho, pero prefiero cafés con más cuerpo. Para quien busque fruta, perfecto.",
+      "en": "It is very well made, but I prefer coffees with more body. Perfect if you are after fruit."
+    },
+    "sku": "HAM-ESP-250",
+    "verified": true
+  },
+  {
+    "id": "hambela-07",
+    "productId": "hambela",
+    "rating": 5,
+    "author": "Ana B.",
+    "date": "2026-07-25",
+    "title": { "es": "Huele a jazmín al abrir la bolsa", "en": "Smells of jasmine when you open the bag" },
+    "body": {
+      "es": "Es abrir la bolsa y la cocina entera huele a flores. En taza, arándano y algo de té negro.",
+      "en": "You open the bag and the whole kitchen smells of flowers. In the cup, blueberry and a touch of black tea."
+    },
+    "sku": "HAM-BEA-1KG",
+    "verified": true
+  },
+  {
+    "id": "hambela-08",
+    "productId": "hambela",
+    "rating": 4,
+    "author": "Pablo C.",
+    "date": "2026-07-18",
+    "title": { "es": "Rico en frío", "en": "Great cold" },
+    "body": {
+      "es": "Lo he preparado en cold brew 12 horas y queda como un zumo de arándano. Muy recomendable en verano.",
+      "en": "I made it as a 12-hour cold brew and it tastes like blueberry juice. Highly recommended in summer."
+    },
+    "sku": "HAM-FIL-250",
+    "verified": false
+  },
+  {
+    "id": "hambela-09",
+    "productId": "hambela",
+    "rating": 5,
+    "author": "Irene L.",
+    "date": "2026-07-09",
+    "title": { "es": "Repetiré seguro", "en": "Will definitely buy again" },
+    "body": {
+      "es": "Envío rapidísimo y el café llegó con fecha de tueste de dos días antes. Así da gusto.",
+      "en": "Super fast shipping and the coffee arrived roasted two days before. That is how it should be."
+    },
+    "sku": "HAM-BEA-250",
+    "verified": true
+  },
+  {
+    "id": "santa-elena-01",
+    "productId": "santa-elena",
+    "rating": 5,
+    "author": "Carmen V.",
+    "date": "2026-09-10",
+    "title": { "es": "Mi café de diario", "en": "My everyday coffee" },
+    "body": {
+      "es": "Dulce, equilibrado y perdona todo. Con leche sabe a cacao con avellana.",
+      "en": "Sweet, balanced and very forgiving. With milk it tastes like hazelnut cocoa."
+    },
+    "sku": "STE-ESP-250",
+    "verified": true
+  },
+  {
+    "id": "santa-elena-02",
+    "productId": "santa-elena",
+    "rating": 4,
+    "author": "Óscar F.",
+    "date": "2026-08-30",
+    "title": { "es": "Redondo en prensa francesa", "en": "Round in a French press" },
+    "body": {
+      "es": "En prensa queda con mucho cuerpo y un final de panela muy agradable.",
+      "en": "In the press it has plenty of body and a very pleasant panela finish."
+    },
+    "sku": "STE-BEA-250",
+    "verified": true
+  },
+  {
+    "id": "santa-elena-03",
+    "productId": "santa-elena",
+    "rating": 5,
+    "author": "Laura N.",
+    "date": "2026-08-12",
+    "title": { "es": "Ideal para empezar", "en": "Great place to start" },
+    "body": {
+      "es": "Para quien viene del café de supermercado es el paso perfecto: nada ácido y muy aromático.",
+      "en": "If you are coming from supermarket coffee, this is the perfect step: no sourness and very aromatic."
+    },
+    "sku": "STE-FIL-250",
+    "verified": true
+  },
+  {
+    "id": "el-diviso-01",
+    "productId": "el-diviso",
+    "rating": 5,
+    "author": "Sergio M.",
+    "date": "2026-09-15",
+    "title": { "es": "Melocotón puro", "en": "Pure peach" },
+    "body": {
+      "es": "No sabía que un café podía saber así. El melocotón es clarísimo y el final, a miel.",
+      "en": "I did not know coffee could taste like this. The peach is crystal clear and the finish is honey."
+    },
+    "sku": "ELD-FIL-250",
+    "verified": true
+  },
+  {
+    "id": "el-diviso-02",
+    "productId": "el-diviso",
+    "rating": 5,
+    "author": "Nuria A.",
+    "date": "2026-09-08",
+    "title": { "es": "Un capricho", "en": "A real treat" },
+    "body": {
+      "es": "Es más caro, pero cada taza es una experiencia. Lo reservo para los domingos.",
+      "en": "It costs more, but every cup is an experience. I save it for Sundays."
+    },
+    "sku": "ELD-BEA-250",
+    "verified": true
+  },
+  {
+    "id": "el-diviso-03",
+    "productId": "el-diviso",
+    "rating": 4,
+    "author": "Tomás G.",
+    "date": "2026-08-27",
+    "title": { "es": "Mejor en filtro", "en": "Better as filter" },
+    "body": {
+      "es": "En espresso se me queda corto de cuerpo, pero en V60 es espectacular.",
+      "en": "As espresso it lacks a little body for me, but on V60 it is spectacular."
+    },
+    "sku": "ELD-ESP-250",
+    "verified": true
+  },
+  {
+    "id": "kiambu-01",
+    "productId": "kiambu",
+    "rating": 5,
+    "author": "Alba R.",
+    "date": "2026-09-11",
+    "title": { "es": "Keniano de los de verdad", "en": "A proper Kenyan" },
+    "body": {
+      "es": "Grosella negra y pomelo, con esa acidez que pica en la lengua. Para fans de los kenianos.",
+      "en": "Blackcurrant and grapefruit, with that acidity that tingles on the tongue. For Kenya fans."
+    },
+    "sku": "KIA-FIL-250",
+    "verified": true
+  },
+  {
+    "id": "kiambu-02",
+    "productId": "kiambu",
+    "rating": 4,
+    "author": "Diego H.",
+    "date": "2026-08-25",
+    "title": { "es": "Intenso", "en": "Intense" },
+    "body": {
+      "es": "Muy ácido para tomarlo solo por la mañana, pero por la tarde en Chemex es una maravilla.",
+      "en": "Too bright for me first thing in the morning, but in a Chemex in the afternoon it is wonderful."
+    },
+    "sku": "KIA-BEA-250",
+    "verified": true
+  },
+  {
+    "id": "kiambu-03",
+    "productId": "kiambu",
+    "rating": 5,
+    "author": "Marina J.",
+    "date": "2026-08-09",
+    "title": { "es": "Ese toque de tomate", "en": "That tomato note" },
+    "body": {
+      "es": "Al enfriarse sale un punto sabroso, como de tomate maduro. Muy complejo.",
+      "en": "As it cools a savoury note appears, like ripe tomato. Very complex."
+    },
+    "sku": "KIA-BEA-1KG",
+    "verified": true
+  },
+  {
+    "id": "acueducto-01",
+    "productId": "acueducto",
+    "rating": 5,
+    "author": "Fernando D.",
+    "date": "2026-09-14",
+    "title": { "es": "Perfecto para cortados", "en": "Perfect for cortados" },
+    "body": {
+      "es": "Con leche es chocolate puro. Llevamos un año suscritos y no lo cambiamos.",
+      "en": "With milk it is pure chocolate. We have been subscribed for a year and would not change it."
+    },
+    "sku": "ACU-ESP-1KG",
+    "verified": true
+  },
+  {
+    "id": "acueducto-02",
+    "productId": "acueducto",
+    "rating": 4,
+    "author": "Rocío P.",
+    "date": "2026-09-01",
+    "title": { "es": "Cuerpo y caramelo", "en": "Body and caramel" },
+    "body": {
+      "es": "Mucho cuerpo, nada amargo. En moka italiana también funciona muy bien.",
+      "en": "Lots of body, never bitter. It works really well in a moka pot too."
+    },
+    "sku": "ACU-ESP-250",
+    "verified": true
+  },
+  {
+    "id": "acueducto-03",
+    "productId": "acueducto",
+    "rating": 5,
+    "author": "Hugo E.",
+    "date": "2026-08-20",
+    "title": { "es": "El de la cafetería, en casa", "en": "The café espresso, at home" },
+    "body": {
+      "es": "Por fin consigo en casa el espresso que me tomo en el tostadero.",
+      "en": "At last I can make at home the espresso I drink at the roastery."
+    },
+    "sku": "ACU-BEA-1KG",
+    "verified": true
+  }
+]

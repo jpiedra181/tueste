@@ -1,0 +1,88 @@
+---
+/**
+ * Layout de todas las páginas: <head>, fuentes, enlace "saltar al contenido", regiones aria-live,
+ * cabecera y pie de tienda, cesta lateral y avisos.
+ * `chrome="checkout"` quita la navegación y el pie de tienda: la cabecera y el pie del checkout llegan
+ * por los slots "header" y "footer".
+ */
+import { Font } from 'astro:assets';
+import '@/styles/global.css';
+import { htmlLang, routePath, useTranslations, otherLocale, type Locale } from '@/i18n';
+import type { CartCatalog } from '@/lib/catalog-types';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import CartDrawer from '@/components/cart/CartDrawer';
+import Toaster from '@/components/feedback/Toaster';
+
+interface Props {
+  locale: Locale;
+  /** Título de la página, sin la marca. */
+  title: string;
+  description: string;
+  /** Ruta de esta misma página en el otro idioma (sin parámetros). */
+  alternatePath: string;
+  catalog: CartCatalog;
+  chrome?: 'store' | 'checkout';
+  noindex?: boolean;
+}
+
+const { locale, title, description, alternatePath, catalog, chrome = 'store', noindex = false } = Astro.props;
+const t = useTranslations(locale);
+const brand = t('common/brand');
+const fullTitle = title === brand ? brand : `${title} · ${brand}`;
+const site = Astro.site ?? new URL('https://tueste.netlify.app');
+// Con build.format 'file' la ruta interna termina en .html; la URL pública no.
+const publicPath = Astro.url.pathname.replace(/(\/index)?\.html$/, '') || '/';
+const canonical = new URL(publicPath, site).href;
+const alternate = new URL(alternatePath, site).href;
+const alt = otherLocale(locale);
+---
+
+<!doctype html>
+<html lang={htmlLang[locale]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={htmlLang[locale]} href={canonical} />
+    <link rel="alternate" hreflang={htmlLang[alt]} href={alternate} />
+    <link rel="alternate" hreflang="x-default" href={new URL(routePath('es', { name: 'home' }), site).href} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#f7f2ea" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={brand} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={locale === 'es' ? 'es_ES' : 'en_US'} />
+    <Font cssVariable="--font-fraunces" preload={[{ style: 'normal' }]} />
+    <Font cssVariable="--font-instrument-sans" preload />
+    <Font cssVariable="--font-plex-mono" />
+    <slot name="head" />
+  </head>
+  <body class="flex min-h-dvh flex-col">
+    <a
+      href="#main"
+      class="sr-only-focusable fixed top-2 left-2 z-[100] rounded-full bg-action-primary px-5 py-3 type-label-m text-text-inverse"
+      >{t('a11y/skip')}</a
+    >
+
+    {chrome === 'store' ? <Header locale={locale} alternatePath={alternatePath} /> : <slot name="header" />}
+
+    <main id="main" tabindex="-1" class="flex-1 outline-none">
+      <slot />
+    </main>
+
+    {chrome === 'store' ? <Footer locale={locale} alternatePath={alternatePath} /> : <slot name="footer" />}
+
+    {chrome === 'store' && <CartDrawer client:paint locale={locale} catalog={catalog} />}
+    <Toaster client:paint locale={locale} />
+
+    <!-- Regiones de anuncios para lectores de pantalla (src/lib/announce.ts). -->
+    <div id="live-polite" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    <div id="live-assertive" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+  </body>
+</html>

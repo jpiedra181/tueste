@@ -1,0 +1,54 @@
+---
+/**
+ * También te gustará (Figma desktop 25:2301 · mobile 29:2240).
+ * Desktop: cabecera con "Ver todos los cafés" a la derecha y 4 tarjetas en fila.
+ * Mobile: carrusel con scroll-snap que sangra hasta el borde derecho; región con nombre y foco
+ * para desplazarlo con el teclado.
+ */
+import type { Locale } from '@/i18n';
+import { routePath, useTranslations } from '@/i18n';
+import type { Product } from '@/lib/schemas';
+import Icon from '@/components/ui/Icon.astro';
+import { buttonClasses } from '@/components/ui/button';
+import ProductCard from './ProductCard.astro';
+import SectionHeader from './sections/SectionHeader.astro';
+import { carouselItemClasses, carouselListClasses, carouselRegionClasses } from './sections/carousel';
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  /** Solo RelatedProducts: cafés relacionados ya resueltos. */
+  related?: Product[];
+}
+
+const { locale, related = [] } = Astro.props;
+const t = useTranslations(locale);
+const titleId = 'related-title';
+---
+
+{related.length > 0 && (
+  <section aria-labelledby={titleId} class="bg-bg-subtle">
+    <div class="container-page flex flex-col gap-8 py-16 lg:gap-10 lg:py-30">
+      <div class="flex flex-col items-start gap-2 lg:flex-row lg:items-end lg:justify-between lg:gap-8">
+        <SectionHeader eyebrow={t('related/eyebrow')} title={t('related/title')} id={titleId} />
+        <a
+          href={routePath(locale, { name: 'listing' })}
+          class={buttonClasses({ variant: 'ghost', size: 'md' })}
+        >
+          {t('related/view-all')}
+          <Icon name="arrow-right" size={20} class="text-icon-primary" />
+        </a>
+      </div>
+
+      <div role="region" aria-label={t('a11y/carousel')} tabindex="0" class={carouselRegionClasses}>
+        <ul role="list" class:list={[carouselListClasses, 'gap-4 lg:grid-cols-4 lg:gap-8']}>
+          {related.map((item) => (
+            <li class:list={[carouselItemClasses, 'w-74']}>
+              <ProductCard product={item} locale={locale} headingLevel={3} loading="lazy" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+)}

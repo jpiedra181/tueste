@@ -1,0 +1,52 @@
+---
+/**
+ * Accordion (Figma 17:673). <details>/<summary> nativo: teclado, estado y anuncio gratis, sin JS.
+ * Hover: título y chevron en terracota. Abierto: el chevron gira (chevron-up de Figma).
+ * Apertura suave donde el navegador anima a `auto` (interpolate-size + ::details-content).
+ */
+import Icon from '@/components/ui/Icon.astro';
+
+interface Props {
+  title: string;
+  open?: boolean;
+}
+
+const { title, open = false } = Astro.props;
+---
+
+<details class="accordion group/acc border-b border-border-default" open={open}>
+  <summary
+    class="group/sum flex list-none items-center gap-4 rounded-xs py-5 text-text-primary [&::-webkit-details-marker]:hidden"
+  >
+    <span
+      class="min-w-0 flex-1 type-heading-h4 transition-colors duration-[var(--duration-fast)] group-hover/sum:text-text-accent"
+      >{title}</span
+    >
+    <Icon
+      name="chevron-down"
+      size={20}
+      class="text-icon-primary transition-[rotate,color] duration-[var(--duration-base)] ease-[var(--ease-out)] group-open/acc:rotate-180 group-hover/sum:text-icon-accent"
+    />
+  </summary>
+  <div class="pr-12 pb-6 type-body-m text-text-secondary">
+    <slot />
+  </div>
+</details>
+
+<style>
+  @supports (interpolate-size: allow-keywords) {
+    .accordion {
+      interpolate-size: allow-keywords;
+    }
+    .accordion::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition:
+        block-size var(--duration-slow) var(--ease-out),
+        content-visibility var(--duration-slow) allow-discrete;
+    }
+    .accordion[open]::details-content {
+      block-size: auto;
+    }
+  }
+</style>

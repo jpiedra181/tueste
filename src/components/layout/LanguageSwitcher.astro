@@ -1,0 +1,64 @@
+---
+/**
+ * Selector de idioma: un enlace a la misma página en el otro idioma.
+ * - compact (cabecera desktop, Figma "Language"): globo + código del idioma actual ("ES").
+ * - full (menú móvil): globo + nombre del otro idioma en su idioma ("English").
+ * `data-lang-switch`: la ficha de producto añade al href los parámetros de variante traducidos.
+ * El nombre accesible empieza por el texto visible (WCAG 2.5.3) y marca cada idioma con `lang`.
+ */
+import Icon from '@/components/ui/Icon.astro';
+import { htmlLang, otherLocale, useTranslations, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  alternatePath: string;
+  variant?: 'compact' | 'full';
+  class?: string;
+}
+
+const { locale, alternatePath, variant = 'compact', class: className } = Astro.props;
+const t = useTranslations(locale);
+const alt = otherLocale(locale);
+const targetName = t(alt === 'en' ? 'a11y/language-en' : 'a11y/language-es');
+---
+
+{
+  variant === 'compact' ? (
+    <a
+      href={alternatePath}
+      hreflang={htmlLang[alt]}
+      lang={htmlLang[alt]}
+      data-lang-switch
+      class:list={[
+        'inline-flex h-12 shrink-0 items-center gap-1.5 rounded-full px-3 type-overline-s text-text-secondary',
+        'transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:bg-action-secondary-hover hover:text-text-primary',
+        className,
+      ]}
+    >
+      <Icon name="globe" size={16} class="text-icon-secondary" />
+      <span lang={htmlLang[locale]}>
+        {t('nav/language')}
+        <span class="sr-only"> · {t('a11y/change-language')} ·</span>
+      </span>
+      <span class="sr-only">{targetName}</span>
+    </a>
+  ) : (
+    <a
+      href={alternatePath}
+      hreflang={htmlLang[alt]}
+      lang={htmlLang[alt]}
+      data-lang-switch
+      class:list={[
+        'flex min-h-12 items-center gap-3 rounded-sm py-3 type-label-l text-text-primary',
+        'transition-colors duration-[var(--duration-fast)] ease-[var(--ease-out)] hover:text-text-accent',
+        className,
+      ]}
+    >
+      <Icon name="globe" size={20} class="text-icon-secondary" />
+      <span class="sr-only" lang={htmlLang[locale]}>
+        {t('a11y/change-language')} ·
+      </span>
+      <span>{targetName}</span>
+    </a>
+  )
+}

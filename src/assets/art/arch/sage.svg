@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="201" height="285" viewBox="0 0 201 285" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Arch" clip-path="url(#clip0_0_41)">
+<path id="Arch Shape" d="M0 285V100.278C0 73.6825 10.5884 48.1764 29.4358 29.3707C48.2832 10.5649 73.8457 0 100.5 0C127.154 0 152.717 10.5649 171.564 29.3707C190.412 48.1764 201 73.6825 201 100.278V285H0Z" fill="#DDEDE0"/>
+</g>
+<defs>
+<clipPath id="clip0_0_41">
+<rect width="201" height="285" fill="white"/>
+</clipPath>
+</defs>
+</svg>

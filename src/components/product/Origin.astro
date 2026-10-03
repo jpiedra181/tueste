@@ -1,0 +1,86 @@
+---
+/**
+ * Origen (Figma desktop 25:2058 · mobile 29:2022).
+ * Con `origin.map` se pinta el mapa de puntos (OriginMap); sin él, la ilustración "Origin" del café
+ * (ProductImage) en el mismo hueco y con su propia proporción 4:5.
+ * Mobile: cabecera, lede, mapa y ficha en columna. Desktop: mapa a la izquierda y ficha en dos columnas.
+ */
+import type { Locale, UIKey } from '@/i18n';
+import { useTranslations } from '@/i18n';
+import { artFor } from '@/lib/art';
+import type { Product } from '@/lib/schemas';
+import { OriginMap } from '@/components/art/OriginMap';
+import { ProductImage } from '@/components/art/ProductImage';
+import SectionHeader from './sections/SectionHeader.astro';
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  /** Solo RelatedProducts: cafés relacionados ya resueltos. */
+  related?: Product[];
+}
+
+const { product, locale } = Astro.props;
+const t = useTranslations(locale);
+const { origin } = product;
+const titleId = 'origin-title';
+
+type SpecKey = keyof Product['origin']['specs'];
+const specs: Array<{ key: SpecKey; label: UIKey }> = [
+  { key: 'region', label: 'pdp/region' },
+  { key: 'producer', label: 'pdp/producer' },
+  { key: 'altitude', label: 'pdp/altitude' },
+  { key: 'variety', label: 'pdp/variety' },
+  { key: 'process', label: 'pdp/process' },
+  { key: 'harvest', label: 'pdp/harvest' },
+];
+---
+
+<section aria-labelledby={titleId}>
+  <div class="container-page flex flex-col gap-6 py-16 lg:grid lg:grid-cols-[minmax(0,560fr)_minmax(0,656fr)] lg:grid-rows-[1fr_auto_auto_auto_1fr] lg:gap-x-16 lg:py-30">
+    <SectionHeader
+      class="lg:col-start-2 lg:row-start-2"
+      eyebrow={t('pdp/origin-eyebrow')}
+      title={t('pdp/origin-title')}
+      id={titleId}
+    />
+    <p class="type-body-m text-text-secondary lg:col-start-2 lg:row-start-3 lg:type-body-l">
+      {origin.lede[locale]}
+    </p>
+
+    {/* Media: en mobile va entre el lede y la ficha; en desktop ocupa la columna izquierda, centrada */}
+    <div class="w-full lg:col-start-1 lg:row-span-5 lg:row-start-1 lg:self-center">
+      {origin.map ? (
+        <OriginMap
+          country={origin.map.country[locale]}
+          region={origin.map.region[locale]}
+          capital={origin.map.capital[locale]}
+          coords={origin.map.coords}
+          alt={t('art/alt-map', {
+            country: origin.map.country[locale],
+            region: origin.map.region[locale],
+            coords: origin.map.coords,
+            capital: origin.map.capital[locale],
+          })}
+        />
+      ) : (
+        <ProductImage
+          art={artFor(product, locale)}
+          view="origin"
+          loading="lazy"
+          alt={t('art/alt-origin', { region: product.art.region[locale] })}
+          className="rounded-md"
+        />
+      )}
+    </div>
+
+    <dl class="grid lg:col-start-2 lg:row-start-4 lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-3 lg:gap-x-8">
+      {specs.map(({ key, label }) => (
+        <div class="flex items-center justify-between gap-4 border-b border-border-default py-4">
+          <dt class="shrink-0 type-overline-s text-text-tertiary">{t(label)}</dt>
+          <dd class="min-w-0 text-right type-label-m text-text-primary">{origin.specs[key][locale]}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

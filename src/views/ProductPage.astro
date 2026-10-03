@@ -1,0 +1,58 @@
+---
+/**
+ * Ficha de producto (Figma: desktop 25:2 · mobile 29:2). La usan /es/cafes/[slug] y /en/coffee/[slug].
+ * Orden: migas de pan, hero (galería + información y compra), notas de cata, origen, reseñas y
+ * cafés relacionados.
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { otherLocale, routePath, type Locale } from '@/i18n';
+import { artFor } from '@/lib/art';
+import { buildCartCatalog, getProducts, getReviews } from '@/lib/catalog';
+import type { Product } from '@/lib/schemas';
+import Breadcrumb from '@/components/product/Breadcrumb.astro';
+import Gallery from '@/components/product/Gallery';
+import ProductInfo from '@/components/product/ProductInfo.astro';
+import ProductJsonLd from '@/components/product/ProductJsonLd.astro';
+import TastingNotes from '@/components/product/TastingNotes.astro';
+import Origin from '@/components/product/Origin.astro';
+import Reviews from '@/components/product/Reviews.astro';
+import RelatedProducts from '@/components/product/RelatedProducts.astro';
+
+interface Props {
+  locale: Locale;
+  product: Product;
+}
+
+const { locale, product } = Astro.props;
+
+const products = await getProducts();
+const reviews = await getReviews(product.id);
+const related = product.related
+  .map((id) => products.find((candidate) => candidate.id === id))
+  .filter((candidate): candidate is Product => candidate !== undefined);
+
+const catalog = buildCartCatalog(products, locale);
+const alternatePath = routePath(otherLocale(locale), { name: 'product', slug: product.id });
+const title = `${product.name} · ${product.card.origin[locale]}`;
+const description = product.subtitle[locale];
+---
+
+<BaseLayout locale={locale} title={title} description={description} alternatePath={alternatePath} catalog={catalog}>
+  <ProductJsonLd slot="head" product={product} reviews={reviews} locale={locale} />
+
+  <Breadcrumb locale={locale} name={product.name} slug={product.id} />
+
+  <div
+    class="lg:mx-auto lg:grid lg:max-w-[90rem] lg:px-20 lg:grid-cols-[minmax(0,45fr)_minmax(22rem,31fr)] lg:items-start lg:gap-16 lg:pb-24"
+  >
+    <div class="md:px-10 md:pt-6 lg:p-0">
+      <Gallery client:paint locale={locale} art={artFor(product, locale)} images={product.images} />
+    </div>
+    <ProductInfo product={product} locale={locale} class="px-5 pt-6 pb-8 md:px-10 lg:p-0" />
+  </div>
+
+  <TastingNotes product={product} locale={locale} />
+  <Origin product={product} locale={locale} />
+  <Reviews product={product} reviews={reviews} locale={locale} />
+  <RelatedProducts product={product} locale={locale} related={related} />
+</BaseLayout>

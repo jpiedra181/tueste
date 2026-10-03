@@ -1,0 +1,19 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="230" height="190" viewBox="0 0 230 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Cup" clip-path="url(#clip0_0_55)">
+<path id="Steam 1" d="M88 30C80 18 98 12 90 0" stroke="#BFB2A4" stroke-width="3" stroke-linecap="round"/>
+<path id="Steam 2" d="M112 34C104 20 122 14 114 2" stroke="#BFB2A4" stroke-width="3" stroke-linecap="round"/>
+<path id="Shadow" opacity="0.12" d="M104 188C159.228 188 204 182.627 204 176C204 169.373 159.228 164 104 164C48.7715 164 4 169.373 4 176C4 182.627 48.7715 188 104 188Z" fill="#15110E"/>
+<path id="Saucer" d="M104 182C157.019 182 200 173.941 200 164C200 154.059 157.019 146 104 146C50.9807 146 8 154.059 8 164C8 173.941 50.9807 182 104 182Z" fill="#FDFBF7"/>
+<path id="Saucer Well" d="M104 170C138.242 170 166 165.523 166 160C166 154.477 138.242 150 104 150C69.7583 150 42 154.477 42 160C42 165.523 69.7583 170 104 170Z" fill="#E3D8C7"/>
+<path id="Handle" d="M164 78C204 76 204 128 158 130" stroke="#FDFBF7" stroke-width="11" stroke-linecap="round"/>
+<path id="Body" d="M44 58H164V100C164 134 138 156 104 156C70 156 44 134 44 100V58Z" fill="#FDFBF7"/>
+<path id="Body Shade" opacity="0.06" d="M140 58H164V100C164 130 146 150 122 155C140 140 146 120 146 100L140 58Z" fill="#15110E"/>
+<path id="Coffee" d="M104 69C137.137 69 164 64.0751 164 58C164 51.9249 137.137 47 104 47C70.8629 47 44 51.9249 44 58C44 64.0751 70.8629 69 104 69Z" fill="#6B4430"/>
+<path id="Crema" opacity="0.45" d="M98 62C114.569 62 128 59.7614 128 57C128 54.2386 114.569 52 98 52C81.4315 52 68 54.2386 68 57C68 59.7614 81.4315 62 98 62Z" fill="#B88523"/>
+</g>
+<defs>
+<clipPath id="clip0_0_55">
+<rect width="230" height="190" fill="white"/>
+</clipPath>
+</defs>
+</svg>

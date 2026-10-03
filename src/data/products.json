@@ -1,0 +1,436 @@
+[
+  {
+    "id": "hambela",
+    "name": "Hambela",
+    "colorway": "terracotta",
+    "badges": ["new", "limited"],
+    "eyebrow": { "es": "Etiopía · Guji · Lote 07", "en": "Ethiopia · Guji · Lot 07" },
+    "subtitle": {
+      "es": "Un natural de altura, jugoso y floral, con notas de arándano, jazmín y bergamota.",
+      "en": "A juicy, floral high-grown natural with notes of blueberry, jasmine and bergamot."
+    },
+    "card": {
+      "origin": { "es": "Etiopía · Natural", "en": "Ethiopia · Natural" },
+      "notes": { "es": "Arándano, jazmín, bergamota", "en": "Blueberry, jasmine, bergamot" }
+    },
+    "roastedOn": "2026-09-29",
+    "art": {
+      "lot": { "es": "Lote 07", "en": "Lot 07" },
+      "process": { "es": "Natural", "en": "Natural" },
+      "altitude": { "es": "2.100 m · Guji", "en": "2,100 m · Guji" },
+      "place": { "es": "Hambela Wamena · 2.100 m", "en": "Hambela Wamena · 2,100 m" },
+      "region": { "es": "Guji, Etiopía", "en": "Guji, Ethiopia" }
+    },
+    "images": ["front", "back", "beans", "still-life", "origin"],
+    "tasting": {
+      "lede": {
+        "es": "Arándano maduro, jazmín y un final largo de bergamota.",
+        "en": "Ripe blueberry, jasmine and a long bergamot finish."
+      },
+      "notes": [
+        {
+          "id": "blueberry",
+          "illustration": "blueberry",
+          "tone": "blue",
+          "name": { "es": "Arándano", "en": "Blueberry" },
+          "description": { "es": "Fruta madura y jugosa, muy limpia.", "en": "Ripe, juicy and very clean fruit." }
+        },
+        {
+          "id": "jasmine",
+          "illustration": "jasmine",
+          "tone": "sage",
+          "name": { "es": "Jazmín", "en": "Jasmine" },
+          "description": { "es": "Aroma floral intenso al moler.", "en": "An intense floral aroma when ground." }
+        },
+        {
+          "id": "bergamot",
+          "illustration": "bergamot",
+          "tone": "ochre",
+          "name": { "es": "Bergamota", "en": "Bergamot" },
+          "description": { "es": "Cítrico elegante en el final.", "en": "An elegant citrus finish." }
+        }
+      ],
+      "acidity": 4,
+      "sweetness": 4,
+      "body": 3,
+      "roast": "light-medium"
+    },
+    "origin": {
+      "lede": {
+        "es": "Cultivado por 640 pequeños productores en las laderas de Hambela Wamena, por encima de los 2.100 metros.",
+        "en": "Grown by 640 smallholders on the slopes of Hambela Wamena, above 2,100 metres."
+      },
+      "map": {
+        "country": { "es": "Etiopía", "en": "Ethiopia" },
+        "region": { "es": "Guji · Hambela", "en": "Guji · Hambela" },
+        "capital": { "es": "Adís Abeba", "en": "Addis Ababa" },
+        "coords": "5°54′ N · 38°36′ E"
+      },
+      "specs": {
+        "region": { "es": "Guji, Oromía", "en": "Guji, Oromia" },
+        "producer": { "es": "Cooperativa Hambela", "en": "Hambela Cooperative" },
+        "altitude": { "es": "2.100–2.300 m", "en": "2,100–2,300 m" },
+        "variety": { "es": "Heirloom etíope", "en": "Ethiopian heirloom" },
+        "process": { "es": "Natural · 21 días en camas", "en": "Natural · 21 days on raised beds" },
+        "harvest": { "es": "Diciembre 2025", "en": "December 2025" }
+      }
+    },
+    "brew": {
+      "es": "V60: 15 g de café, 250 g de agua a 94 °C, 3 minutos. Espresso: 18 g → 40 g en 28 segundos.",
+      "en": "V60: 15 g coffee, 250 g water at 94 °C, 3 minutes. Espresso: 18 g → 40 g in 28 seconds."
+    },
+    "subscription": { "discountPct": 10, "intervalWeeks": 4 },
+    "rating": { "average": 4.8, "count": 126, "distribution": { "5": 98, "4": 20, "3": 5, "2": 2, "1": 1 } },
+    "options": { "grind": ["beans", "espresso", "filter"], "size": ["250g", "1kg"] },
+    "variants": [
+      { "sku": "HAM-BEA-250", "grind": "beans", "size": "250g", "grams": 250, "price": 1450, "stock": 14 },
+      { "sku": "HAM-ESP-250", "grind": "espresso", "size": "250g", "grams": 250, "price": 1450, "stock": 32 },
+      { "sku": "HAM-FIL-250", "grind": "filter", "size": "250g", "grams": 250, "price": 1450, "stock": 27 },
+      { "sku": "HAM-BEA-1KG", "grind": "beans", "size": "1kg", "grams": 1000, "price": 4900, "stock": 8 },
+      { "sku": "HAM-ESP-1KG", "grind": "espresso", "size": "1kg", "grams": 1000, "price": 4900, "stock": 6 },
+      { "sku": "HAM-FIL-1KG", "grind": "filter", "size": "1kg", "grams": 1000, "price": 4900, "stock": 0 }
+    ],
+    "defaultSku": "HAM-BEA-250",
+    "related": ["santa-elena", "el-diviso", "kiambu", "acueducto"]
+  },
+  {
+    "id": "santa-elena",
+    "name": "Santa Elena",
+    "colorway": "sage",
+    "badges": [],
+    "eyebrow": { "es": "Guatemala · Huehuetenango · Lote 12", "en": "Guatemala · Huehuetenango · Lot 12" },
+    "subtitle": {
+      "es": "Un lavado redondo y goloso, con cacao, avellana tostada y un dulzor de panela.",
+      "en": "A round, comforting washed coffee with cocoa, toasted hazelnut and panela sweetness."
+    },
+    "card": {
+      "origin": { "es": "Guatemala · Lavado", "en": "Guatemala · Washed" },
+      "notes": { "es": "Cacao, avellana, panela", "en": "Cocoa, hazelnut, panela" }
+    },
+    "roastedOn": "2026-09-29",
+    "art": {
+      "lot": { "es": "Lote 12", "en": "Lot 12" },
+      "process": { "es": "Lavado", "en": "Washed" },
+      "altitude": { "es": "1.700 m · Huehue", "en": "1,700 m · Huehue" },
+      "place": { "es": "La Libertad · 1.700 m", "en": "La Libertad · 1,700 m" },
+      "region": { "es": "Huehuetenango, Guatemala", "en": "Huehuetenango, Guatemala" }
+    },
+    "images": ["front", "back", "beans", "still-life", "origin"],
+    "tasting": {
+      "lede": {
+        "es": "Cacao puro, avellana tostada y un final largo de panela.",
+        "en": "Pure cocoa, toasted hazelnut and a long panela finish."
+      },
+      "notes": [
+        {
+          "id": "cocoa",
+          "tone": "ink",
+          "name": { "es": "Cacao", "en": "Cocoa" },
+          "description": { "es": "Amargor suave de chocolate negro.", "en": "The gentle bitterness of dark chocolate." }
+        },
+        {
+          "id": "hazelnut",
+          "tone": "ochre",
+          "name": { "es": "Avellana", "en": "Hazelnut" },
+          "description": { "es": "Fruto seco tostado, muy redondo.", "en": "Toasted nut, very rounded." }
+        },
+        {
+          "id": "panela",
+          "tone": "terracotta",
+          "name": { "es": "Panela", "en": "Panela" },
+          "description": { "es": "Dulzor de caña sin refinar.", "en": "Unrefined cane sweetness." }
+        }
+      ],
+      "acidity": 2,
+      "sweetness": 4,
+      "body": 4,
+      "roast": "medium"
+    },
+    "origin": {
+      "lede": {
+        "es": "Una finca familiar en La Libertad, Huehuetenango, donde el café crece a la sombra de ingas y bananeras.",
+        "en": "A family farm in La Libertad, Huehuetenango, where coffee grows in the shade of inga and banana trees."
+      },
+      "specs": {
+        "region": { "es": "Huehuetenango", "en": "Huehuetenango" },
+        "producer": { "es": "Finca Santa Elena", "en": "Finca Santa Elena" },
+        "altitude": { "es": "1.650–1.800 m", "en": "1,650–1,800 m" },
+        "variety": { "es": "Bourbon, Caturra", "en": "Bourbon, Caturra" },
+        "process": { "es": "Lavado · 36 h de fermentación", "en": "Washed · 36 h fermentation" },
+        "harvest": { "es": "Marzo 2026", "en": "March 2026" }
+      }
+    },
+    "brew": {
+      "es": "Prensa francesa: 30 g de café, 500 g de agua a 93 °C, 4 minutos. Espresso: 18 g → 36 g en 30 segundos.",
+      "en": "French press: 30 g coffee, 500 g water at 93 °C, 4 minutes. Espresso: 18 g → 36 g in 30 seconds."
+    },
+    "subscription": { "discountPct": 10, "intervalWeeks": 4 },
+    "rating": { "average": 4.6, "count": 84, "distribution": { "5": 58, "4": 18, "3": 6, "2": 1, "1": 1 } },
+    "options": { "grind": ["beans", "espresso", "filter"], "size": ["250g", "1kg"] },
+    "variants": [
+      { "sku": "STE-BEA-250", "grind": "beans", "size": "250g", "grams": 250, "price": 1200, "stock": 40 },
+      { "sku": "STE-ESP-250", "grind": "espresso", "size": "250g", "grams": 250, "price": 1200, "stock": 35 },
+      { "sku": "STE-FIL-250", "grind": "filter", "size": "250g", "grams": 250, "price": 1200, "stock": 22 },
+      { "sku": "STE-BEA-1KG", "grind": "beans", "size": "1kg", "grams": 1000, "price": 4000, "stock": 15 },
+      { "sku": "STE-ESP-1KG", "grind": "espresso", "size": "1kg", "grams": 1000, "price": 4000, "stock": 12 },
+      { "sku": "STE-FIL-1KG", "grind": "filter", "size": "1kg", "grams": 1000, "price": 4000, "stock": 9 }
+    ],
+    "defaultSku": "STE-BEA-250",
+    "related": ["hambela", "el-diviso", "kiambu", "acueducto"]
+  },
+  {
+    "id": "el-diviso",
+    "name": "El Diviso",
+    "colorway": "ochre",
+    "badges": ["new"],
+    "eyebrow": { "es": "Colombia · Huila · Lote 15", "en": "Colombia · Huila · Lot 15" },
+    "subtitle": {
+      "es": "Un honey luminoso de Pink Bourbon: melocotón, lichi y miel de flores.",
+      "en": "A bright Pink Bourbon honey: peach, lychee and wildflower honey."
+    },
+    "card": {
+      "origin": { "es": "Colombia · Honey", "en": "Colombia · Honey" },
+      "notes": { "es": "Melocotón, lichi, miel", "en": "Peach, lychee, honey" }
+    },
+    "roastedOn": "2026-09-29",
+    "art": {
+      "lot": { "es": "Lote 15", "en": "Lot 15" },
+      "process": { "es": "Honey", "en": "Honey" },
+      "altitude": { "es": "1.800 m · Huila", "en": "1,800 m · Huila" },
+      "place": { "es": "Pitalito · 1.800 m", "en": "Pitalito · 1,800 m" },
+      "region": { "es": "Huila, Colombia", "en": "Huila, Colombia" }
+    },
+    "images": ["front", "back", "beans", "still-life", "origin"],
+    "tasting": {
+      "lede": {
+        "es": "Melocotón de viña, lichi y un final sedoso de miel.",
+        "en": "Vine peach, lychee and a silky honey finish."
+      },
+      "notes": [
+        {
+          "id": "peach",
+          "tone": "terracotta",
+          "name": { "es": "Melocotón", "en": "Peach" },
+          "description": { "es": "Fruta de hueso, jugosa y dulce.", "en": "Juicy, sweet stone fruit." }
+        },
+        {
+          "id": "lychee",
+          "tone": "plum",
+          "name": { "es": "Lichi", "en": "Lychee" },
+          "description": { "es": "Perfumado y tropical.", "en": "Perfumed and tropical." }
+        },
+        {
+          "id": "honey",
+          "tone": "ochre",
+          "name": { "es": "Miel", "en": "Honey" },
+          "description": { "es": "Textura sedosa en el final.", "en": "A silky texture on the finish." }
+        }
+      ],
+      "acidity": 4,
+      "sweetness": 5,
+      "body": 2,
+      "roast": "light"
+    },
+    "origin": {
+      "lede": {
+        "es": "Pink Bourbon cultivado en Pitalito, al sur del Huila, y secado en camas durante 18 días.",
+        "en": "Pink Bourbon grown in Pitalito, southern Huila, and dried on raised beds for 18 days."
+      },
+      "specs": {
+        "region": { "es": "Pitalito, Huila", "en": "Pitalito, Huila" },
+        "producer": { "es": "Finca El Diviso", "en": "Finca El Diviso" },
+        "altitude": { "es": "1.700–1.900 m", "en": "1,700–1,900 m" },
+        "variety": { "es": "Pink Bourbon", "en": "Pink Bourbon" },
+        "process": { "es": "Honey · 18 días de secado", "en": "Honey · 18 days drying" },
+        "harvest": { "es": "Junio 2026", "en": "June 2026" }
+      }
+    },
+    "brew": {
+      "es": "V60: 15 g de café, 250 g de agua a 92 °C, 2 min 45 s. Aeropress: 16 g, 220 g de agua, 1 min 30 s.",
+      "en": "V60: 15 g coffee, 250 g water at 92 °C, 2 min 45 s. Aeropress: 16 g, 220 g water, 1 min 30 s."
+    },
+    "subscription": { "discountPct": 10, "intervalWeeks": 4 },
+    "rating": { "average": 4.9, "count": 41, "distribution": { "5": 37, "4": 3, "3": 1, "2": 0, "1": 0 } },
+    "options": { "grind": ["beans", "espresso", "filter"], "size": ["250g", "1kg"] },
+    "variants": [
+      { "sku": "ELD-BEA-250", "grind": "beans", "size": "250g", "grams": 250, "price": 1690, "stock": 18 },
+      { "sku": "ELD-ESP-250", "grind": "espresso", "size": "250g", "grams": 250, "price": 1690, "stock": 10 },
+      { "sku": "ELD-FIL-250", "grind": "filter", "size": "250g", "grams": 250, "price": 1690, "stock": 24 },
+      { "sku": "ELD-BEA-1KG", "grind": "beans", "size": "1kg", "grams": 1000, "price": 5600, "stock": 4 },
+      { "sku": "ELD-ESP-1KG", "grind": "espresso", "size": "1kg", "grams": 1000, "price": 5600, "stock": 0 },
+      { "sku": "ELD-FIL-1KG", "grind": "filter", "size": "1kg", "grams": 1000, "price": 5600, "stock": 3 }
+    ],
+    "defaultSku": "ELD-BEA-250",
+    "related": ["hambela", "kiambu", "santa-elena", "acueducto"]
+  },
+  {
+    "id": "kiambu",
+    "name": "Kiambu",
+    "colorway": "plum",
+    "badges": [],
+    "eyebrow": { "es": "Kenia · Kiambu · Lote 09", "en": "Kenya · Kiambu · Lot 09" },
+    "subtitle": {
+      "es": "Un keniano vibrante y sabroso: grosella negra, pomelo rosa y un toque de tomate maduro.",
+      "en": "A vibrant, savoury Kenyan: blackcurrant, pink grapefruit and a hint of ripe tomato."
+    },
+    "card": {
+      "origin": { "es": "Kenia · Lavado", "en": "Kenya · Washed" },
+      "notes": { "es": "Grosella, pomelo, tomate", "en": "Blackcurrant, grapefruit, tomato" }
+    },
+    "roastedOn": "2026-09-29",
+    "art": {
+      "lot": { "es": "Lote 09", "en": "Lot 09" },
+      "process": { "es": "Lavado", "en": "Washed" },
+      "altitude": { "es": "1.750 m · Kiambu", "en": "1,750 m · Kiambu" },
+      "place": { "es": "Ruiru · 1.750 m", "en": "Ruiru · 1,750 m" },
+      "region": { "es": "Kiambu, Kenia", "en": "Kiambu, Kenya" }
+    },
+    "images": ["front", "back", "beans", "still-life", "origin"],
+    "tasting": {
+      "lede": {
+        "es": "Grosella negra, pomelo rosa y una acidez jugosa que no se olvida.",
+        "en": "Blackcurrant, pink grapefruit and a juicy acidity you will not forget."
+      },
+      "notes": [
+        {
+          "id": "blackcurrant",
+          "tone": "plum",
+          "name": { "es": "Grosella", "en": "Blackcurrant" },
+          "description": { "es": "Fruta negra intensa y ácida.", "en": "Intense, tart dark fruit." }
+        },
+        {
+          "id": "grapefruit",
+          "tone": "terracotta",
+          "name": { "es": "Pomelo", "en": "Grapefruit" },
+          "description": { "es": "Cítrico rosado y brillante.", "en": "Bright pink citrus." }
+        },
+        {
+          "id": "tomato",
+          "tone": "sage",
+          "name": { "es": "Tomate", "en": "Tomato" },
+          "description": { "es": "Un punto sabroso y umami.", "en": "A savoury, umami edge." }
+        }
+      ],
+      "acidity": 5,
+      "sweetness": 3,
+      "body": 3,
+      "roast": "light"
+    },
+    "origin": {
+      "lede": {
+        "es": "SL28 y SL34 de pequeños productores de Ruiru, lavados con doble fermentación en la estación de la cooperativa.",
+        "en": "SL28 and SL34 from Ruiru smallholders, double-fermented and washed at the cooperative station."
+      },
+      "specs": {
+        "region": { "es": "Kiambu", "en": "Kiambu" },
+        "producer": { "es": "Cooperativa de Ruiru", "en": "Ruiru Cooperative" },
+        "altitude": { "es": "1.700–1.850 m", "en": "1,700–1,850 m" },
+        "variety": { "es": "SL28, SL34", "en": "SL28, SL34" },
+        "process": { "es": "Lavado · doble fermentación", "en": "Washed · double fermentation" },
+        "harvest": { "es": "Enero 2026", "en": "January 2026" }
+      }
+    },
+    "brew": {
+      "es": "Chemex: 30 g de café, 500 g de agua a 95 °C, 4 minutos. Mejor en filtro que en espresso.",
+      "en": "Chemex: 30 g coffee, 500 g water at 95 °C, 4 minutes. Better as filter than espresso."
+    },
+    "subscription": { "discountPct": 10, "intervalWeeks": 4 },
+    "rating": { "average": 4.7, "count": 63, "distribution": { "5": 47, "4": 12, "3": 3, "2": 1, "1": 0 } },
+    "options": { "grind": ["beans", "espresso", "filter"], "size": ["250g", "1kg"] },
+    "variants": [
+      { "sku": "KIA-BEA-250", "grind": "beans", "size": "250g", "grams": 250, "price": 1550, "stock": 26 },
+      { "sku": "KIA-ESP-250", "grind": "espresso", "size": "250g", "grams": 250, "price": 1550, "stock": 0 },
+      { "sku": "KIA-FIL-250", "grind": "filter", "size": "250g", "grams": 250, "price": 1550, "stock": 5 },
+      { "sku": "KIA-BEA-1KG", "grind": "beans", "size": "1kg", "grams": 1000, "price": 5200, "stock": 7 },
+      { "sku": "KIA-ESP-1KG", "grind": "espresso", "size": "1kg", "grams": 1000, "price": 5200, "stock": 0 },
+      { "sku": "KIA-FIL-1KG", "grind": "filter", "size": "1kg", "grams": 1000, "price": 5200, "stock": 6 }
+    ],
+    "defaultSku": "KIA-BEA-250",
+    "related": ["hambela", "el-diviso", "santa-elena", "acueducto"]
+  },
+  {
+    "id": "acueducto",
+    "name": "Acueducto",
+    "colorway": "ink",
+    "badges": ["bestseller"],
+    "eyebrow": { "es": "Mezcla espresso · Brasil y Guatemala", "en": "Espresso blend · Brazil and Guatemala" },
+    "subtitle": {
+      "es": "Nuestra mezcla de la casa: chocolate con leche, caramelo y nuez, también con leche.",
+      "en": "Our house blend: milk chocolate, caramel and walnut, great with milk too."
+    },
+    "card": {
+      "origin": { "es": "Mezcla espresso", "en": "Espresso blend" },
+      "notes": { "es": "Chocolate, caramelo, nuez", "en": "Chocolate, caramel, walnut" }
+    },
+    "roastedOn": "2026-09-29",
+    "art": {
+      "lot": { "es": "Casa", "en": "House" },
+      "process": { "es": "Mezcla", "en": "Blend" },
+      "altitude": { "es": "Brasil · Guatemala", "en": "Brazil · Guatemala" },
+      "place": { "es": "Cerrado · Huehuetenango", "en": "Cerrado · Huehuetenango" },
+      "region": { "es": "Segovia, España", "en": "Segovia, Spain" }
+    },
+    "images": ["front", "back", "beans", "still-life", "origin"],
+    "tasting": {
+      "lede": {
+        "es": "Chocolate con leche, caramelo tostado y nuez: el espresso de cada mañana.",
+        "en": "Milk chocolate, toasted caramel and walnut: the everyday espresso."
+      },
+      "notes": [
+        {
+          "id": "chocolate",
+          "tone": "ink",
+          "name": { "es": "Chocolate", "en": "Chocolate" },
+          "description": { "es": "Chocolate con leche, cremoso.", "en": "Creamy milk chocolate." }
+        },
+        {
+          "id": "caramel",
+          "tone": "ochre",
+          "name": { "es": "Caramelo", "en": "Caramel" },
+          "description": { "es": "Azúcar tostado, nada amargo.", "en": "Toasted sugar, never bitter." }
+        },
+        {
+          "id": "walnut",
+          "tone": "terracotta",
+          "name": { "es": "Nuez", "en": "Walnut" },
+          "description": { "es": "Final seco y elegante.", "en": "A dry, elegant finish." }
+        }
+      ],
+      "acidity": 2,
+      "sweetness": 4,
+      "body": 5,
+      "roast": "medium-dark"
+    },
+    "origin": {
+      "lede": {
+        "es": "Un natural del Cerrado Mineiro y un lavado de Huehuetenango, tostados por separado y mezclados en Segovia.",
+        "en": "A Cerrado Mineiro natural and a Huehuetenango washed coffee, roasted separately and blended in Segovia."
+      },
+      "specs": {
+        "region": { "es": "Cerrado Mineiro · Huehuetenango", "en": "Cerrado Mineiro · Huehuetenango" },
+        "producer": { "es": "Dos fincas familiares", "en": "Two family farms" },
+        "altitude": { "es": "1.100–1.700 m", "en": "1,100–1,700 m" },
+        "variety": { "es": "Mundo Novo, Bourbon", "en": "Mundo Novo, Bourbon" },
+        "process": { "es": "Natural y lavado", "en": "Natural and washed" },
+        "harvest": { "es": "2026", "en": "2026" }
+      }
+    },
+    "brew": {
+      "es": "Espresso: 18 g → 38 g en 27 segundos. Con leche, sube a 20 g de dosis.",
+      "en": "Espresso: 18 g → 38 g in 27 seconds. With milk, go up to a 20 g dose."
+    },
+    "subscription": { "discountPct": 10, "intervalWeeks": 4 },
+    "rating": { "average": 4.7, "count": 212, "distribution": { "5": 160, "4": 38, "3": 9, "2": 3, "1": 2 } },
+    "options": { "grind": ["beans", "espresso", "filter"], "size": ["250g", "1kg"] },
+    "variants": [
+      { "sku": "ACU-BEA-250", "grind": "beans", "size": "250g", "grams": 250, "price": 1150, "stock": 60 },
+      { "sku": "ACU-ESP-250", "grind": "espresso", "size": "250g", "grams": 250, "price": 1150, "stock": 48 },
+      { "sku": "ACU-FIL-250", "grind": "filter", "size": "250g", "grams": 250, "price": 1150, "stock": 30 },
+      { "sku": "ACU-BEA-1KG", "grind": "beans", "size": "1kg", "grams": 1000, "price": 3800, "stock": 25 },
+      { "sku": "ACU-ESP-1KG", "grind": "espresso", "size": "1kg", "grams": 1000, "price": 3800, "stock": 22 },
+      { "sku": "ACU-FIL-1KG", "grind": "filter", "size": "1kg", "grams": 1000, "price": 3800, "stock": 11 }
+    ],
+    "defaultSku": "ACU-BEA-250",
+    "related": ["santa-elena", "hambela", "el-diviso", "kiambu"]
+  }
+]

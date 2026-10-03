@@ -1,0 +1,32 @@
+---
+/**
+ * Logo (Figma 9:322). Tone "ink" sobre superficies claras, "inverse" sobre espresso.
+ * El símbolo es el SVG de Figma; "Tueste" es texto real en Fraunces.
+ * Con `href` es un enlace (a la portada en cabecera y pie).
+ */
+import markUrl from '@/assets/brand/logo-mark.svg?url';
+
+interface Props {
+  tone?: 'ink' | 'inverse';
+  href?: string;
+  class?: string;
+}
+
+const { tone = 'ink', href, class: className } = Astro.props;
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'inline-flex shrink-0 items-center gap-2 rounded-sm p-3',
+    tone === 'inverse' ? 'text-text-inverse' : 'text-text-primary',
+    className,
+  ]}
+>
+  <img src={markUrl} width="32" height="32" alt="" class="size-8 shrink-0" />
+  <span
+    class="font-display text-[1.75rem] leading-8 font-normal tracking-[-0.03em] whitespace-nowrap [font-variation-settings:'SOFT'_0,'WONK'_1]"
+    >Tueste</span
+  >
+</Tag>
